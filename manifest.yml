@@ -1,0 +1,49 @@
+---
+- branch: master
+  dl_name: valve
+  games:
+    - title: 'Half-Life'
+      dir: valve
+      steam:
+        app_id: 70
+        depot_ids: [1, 71, 96]
+- branch: opfor
+  games:
+    - title: 'Half-Life: Opposing Force'
+      url: 'https://store.steampowered.com/app/50/HalfLife_Opposing_Force/'
+      steam:
+        app_id: 50
+        depot_ids: [1, 51, 96]
+- branch: bshift
+  games:
+    - title: 'Half-Life: Blue Shift'
+      url: 'https://store.steampowered.com/app/130/HalfLife_Blue_Shift/'
+      steam:
+        app_id: 130
+        depot_ids: [1, 130, 96]
+#- branch: aghl
+#- branch: aom
+#- branch: aomdc
+#- branch: asheep
+#- branch: biglolly
+#- branch: blackops
+#- branch: bubblemod
+#- branch: caseclosed
+#- branch: CAd
+#- branch: clcampaign
+#- branch: dmc
+#- branch: echoes
+#- branch: eftd
+#- branch: induction
+#- branch: invasion
+#- branch: half-screwed
+#- branch: halloween
+#- branch: hltopdown
+#- branch: hl_urbicide
+#- branch: half-secret
+#- branch: noffice
+#- branch: redempt
+#- branch: sewer_beta
+#- branch: sohl1.2
+#- branch: tot
+#- branch: zombie-x

@@ -37,6 +37,12 @@ jobs:
         submodules: recursive
     - name: Install dependencies
       run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
+    - name: Restore object files
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          hlsdk-portable/build
+        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}
     - name: Build HLSDK
       env:
         FWGS_PFX_PASSWORD: ${{ secrets.FWGS_PFX_PASSWORD }}
@@ -46,6 +52,12 @@ jobs:
       with:
         name: artifact-${{ matrix.targetos }}-${{ matrix.targetarch }}
         path: out/*
+    - name: Save object files
+      uses: actions/cache/save@v4
+      with:
+        path: |
+          hlsdk-portable/build
+        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}
   release:
     name: "Upload releases"
     runs-on: ubuntu-latest

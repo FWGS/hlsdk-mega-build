@@ -1,8 +1,21 @@
 name: Build & Deploy HLSDK
 on: [push, pull_request]
 jobs:
+  get_prev_runid:
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ steps.do.outputs.value }}
+    steps:
+      - id: do
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          value=$(gh run -R ${{ github.repository }} list -b${{ github.ref_name }} -ssuccess -L1 --json databaseId -q'.[0].databaseId')
+          echo "Last run ID is $value"
+          echo "value=$value" >> "$GITHUB_OUTPUT"
   build:
     runs-on: ${{ matrix.os }}
+    needs: get_prev_runid
     continue-on-error: true
     strategy:
       fail-fast: false
@@ -54,7 +67,7 @@ jobs:
       with:
         path: |
           hlsdk-portable/build
-        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}
+        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-${{ needs.get_prev_runid.outputs.value }}
     - name: Build HLSDK
       env:
         FWGS_PFX_PASSWORD: ${{ secrets.FWGS_PFX_PASSWORD }}
@@ -69,7 +82,7 @@ jobs:
       with:
         path: |
           hlsdk-portable/build
-        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}
+        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-${{ github.job }}
   release:
     name: "Upload releases"
     runs-on: ubuntu-latest

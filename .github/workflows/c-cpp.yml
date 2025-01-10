@@ -32,6 +32,12 @@ jobs:
           - os: windows-2019 # always use the oldest possible for 32-bit because of older compilers, and better support of certain legacy OSes
             targetos: win32
             targetarch: i386
+          - os: macos-14 # arm64 as per github documentation
+            targetos: apple
+            targetarch: arm64
+          - os: macos-13 # x86 as per github documentation (will they fix it before they deprecate this version?..)
+            targetos: apple
+            targetarch: amd64
     env:
       YQ_VERSION: 4.44.6
       GH_CPU_OS: ${{ matrix.targetos }}

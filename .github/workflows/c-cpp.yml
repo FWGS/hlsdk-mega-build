@@ -26,6 +26,12 @@ jobs:
           - os: ubuntu-20.04
             targetos: linux
             targetarch: ppc64el
+          - os: windows-latest
+            targetos: win32
+            targetarch: amd64
+          - os: windows-2019 # always use the oldest possible for 32-bit because of older compilers, and better support of certain legacy OSes
+            targetos: win32
+            targetarch: i386
     env:
       YQ_VERSION: 4.44.6
       GH_CPU_OS: ${{ matrix.targetos }}

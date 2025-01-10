@@ -72,13 +72,13 @@ for (( i = 0 ; i < MODS ; i++ )); do
 	GAMEDIR="" # expected to be set within build_hlsdk_portable_branch
 
 	pushd hlsdk-portable || exit 1
-		build_hlsdk_portable_branch "$BRANCH"
-		SUCCESS=$?
-
-		if [ $SUCCESS -ne 0 ]; then
-			continue
-		fi
+	build_hlsdk_portable_branch "$BRANCH"
+	SUCCESS=$?
 	popd || exit 1
+
+	if [ $SUCCESS -ne 0 ]; then
+		continue
+	fi
 
 	pack_staged_gamedir "$GAMEDIR" "$GH_CPU_OS-$GH_CPU_ARCH"
 done

@@ -21,29 +21,40 @@
       steam:
         app_id: 130
         depot_ids: [1, 130, 96]
-#- branch: aghl
-#- branch: aom
-#- branch: aomdc
-#- branch: asheep
-#- branch: biglolly
-#- branch: blackops
+
+# FIXME: implement alternate libraries for bot10, bubblemod, hlfixed, opforfixed, etc
+
+#- branch: aghl (doesn't pass build on hlsdk-portable CI)
+- branch: aom
+- branch: aomdc
+- branch: asheep
+- branch: biglolly
+- branch: blackops
 #- branch: bubblemod
-#- branch: caseclosed
-#- branch: CAd
-#- branch: clcampaign
-#- branch: dmc
-#- branch: echoes
-#- branch: eftd
-#- branch: induction
+- branch: caseclosed
+- branch: CAd
+- branch: clcampaign
+- branch: decay-pc2
+- branch: dmc
+- branch: echoes
+- branch: eftd
+- branch: induction_1.2
 #- branch: invasion
-#- branch: half-screwed
-#- branch: halloween
-#- branch: hltopdown
-#- branch: hl_urbicide
-#- branch: half-secret
-#- branch: noffice
-#- branch: redempt
-#- branch: sewer_beta
-#- branch: sohl1.2
-#- branch: tot
-#- branch: zombie-x
+- branch: half-secret
+- branch: half-screwed
+- branch: halloween
+- branch: hltopdown
+- branch: hl_urbicide
+- branch: noffice
+- branch: poke646
+- branch: poke646_vendetta
+- branch: rebellion
+- branch: residual_point
+- branch: redempt
+- branch: sewer_beta
+- branch: sohl1.2
+- branch: visitors
+- branch: thegate
+- branch: theyhunger
+- branch: tot
+- branch: zombie-x

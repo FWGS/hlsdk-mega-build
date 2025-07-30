@@ -39,9 +39,9 @@ jobs:
             targetarch: amd64
     env:
       YQ_VERSION: 4.44.6
-      WAFCACHE: ~/wafcache
+#      WAFCACHE: ~/wafcache
       WAFCACHE_STATS: 1
-      MSVC_WINE_PATH: ~/msvc
+      MSVC_WINE_PATH: /home/runner/msvc
       GH_CPU_OS: ${{ matrix.targetos }}
       GH_CPU_ARCH: ${{ matrix.targetarch }}
     steps:
@@ -49,12 +49,12 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-    - name: Cache
-      uses: actions/cache@v4
-      if: ${{ runner.environment == 'github-hosted' }}
-      with:
-        path: ~/wafcache
-        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-wafcache
+#    - name: Cache
+#      uses: actions/cache@v4
+#      if: ${{ runner.environment == 'github-hosted' }}
+#      with:
+#        path: ~/wafcache
+#        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-wafcache
     - name: Install dependencies
       run: bash scripts/gha/${{ runner.environment }}/deps_${{ matrix.targetos }}.sh
     - name: Build HLSDK

@@ -29,7 +29,7 @@ build_with_waf()
 	fi
 
 	if [ -n "$CROSS_COMPILE" ]; then
-		WAF_ENABLE_CROSS_COMPILE=--enable-cross-compile-env
+		WAF_ENABLE_CROSS_COMPILE_ENV=--enable-cross-compile-env
 	fi
 
 	export WAFCACHE_STATS=1

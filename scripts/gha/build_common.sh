@@ -24,15 +24,12 @@ build_with_waf()
 	fi
 
 	if [ "$MSVC_WINE" -ne 0 ]; then
-		export MSVC_WINE_PATH=/home/runner/msvc
 		WAF_ENABLE_MSVC_WINE=--enable-msvc-wine
 	fi
 
 	if [ -n "$CROSS_COMPILE" ]; then
 		WAF_ENABLE_CROSS_COMPILE_ENV=--enable-cross-compile-env
 	fi
-
-	export WAFCACHE_STATS=1
 
 	python waf \
 		configure \

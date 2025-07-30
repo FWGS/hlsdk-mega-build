@@ -7,54 +7,54 @@
       steam:
         app_id: 70
         depot_ids: [1, 71, 96]
-- branch: opfor
-  games:
-    - title: 'Half-Life: Opposing Force'
-      url: 'https://store.steampowered.com/app/50/HalfLife_Opposing_Force/'
-      steam:
-        app_id: 50
-        depot_ids: [1, 51, 96]
-- branch: bshift
-  games:
-    - title: 'Half-Life: Blue Shift'
-      url: 'https://store.steampowered.com/app/130/HalfLife_Blue_Shift/'
-      steam:
-        app_id: 130
-        depot_ids: [1, 130, 96]
+#- branch: opfor
+#  games:
+#    - title: 'Half-Life: Opposing Force'
+#      url: 'https://store.steampowered.com/app/50/HalfLife_Opposing_Force/'
+#      steam:
+#        app_id: 50
+#        depot_ids: [1, 51, 96]
+#- branch: bshift
+#  games:
+#    - title: 'Half-Life: Blue Shift'
+#      url: 'https://store.steampowered.com/app/130/HalfLife_Blue_Shift/'
+#      steam:
+#        app_id: 130
+#        depot_ids: [1, 130, 96]
 
 # FIXME: implement alternate libraries for bot10, bubblemod, hlfixed, opforfixed, etc
 
 #- branch: aghl (doesn't pass build on hlsdk-portable CI)
-- branch: aom
-- branch: aomdc
-- branch: asheep
-- branch: biglolly
-- branch: blackops
+#- branch: aom
+#- branch: aomdc
+#- branch: asheep
+#- branch: biglolly
+#- branch: blackops
 #- branch: bubblemod
-- branch: caseclosed
-- branch: CAd
-- branch: clcampaign
-- branch: decay-pc2
-- branch: dmc
-- branch: echoes
-- branch: eftd
-- branch: induction_1.2
+#- branch: caseclosed
+#- branch: CAd
+#- branch: clcampaign
+#- branch: decay-pc2
+#- branch: dmc
+#- branch: echoes
+#- branch: eftd
+#- branch: induction_1.2
 #- branch: invasion
-- branch: half-secret
-- branch: half-screwed
-- branch: halloween
-- branch: hltopdown
-- branch: hl_urbicide
-- branch: noffice
-- branch: poke646
-- branch: poke646_vendetta
-- branch: rebellion
-- branch: residual_point
-- branch: redempt
-- branch: sewer_beta
-- branch: sohl1.2
-- branch: visitors
-- branch: thegate
-- branch: theyhunger
-- branch: tot
-- branch: zombie-x
+#- branch: half-secret
+#- branch: half-screwed
+#- branch: halloween
+#- branch: hltopdown
+#- branch: hl_urbicide
+#- branch: noffice
+#- branch: poke646
+#- branch: poke646_vendetta
+#- branch: rebellion
+#- branch: residual_point
+#- branch: redempt
+#- branch: sewer_beta
+#- branch: sohl1.2
+#- branch: visitors
+#- branch: thegate
+#- branch: theyhunger
+#- branch: tot
+#- branch: zombie-x

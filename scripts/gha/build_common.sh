@@ -1,6 +1,13 @@
 #!/bin/bash
 
-MODS=$(./yq length manifest.yml)
+# TODO: remove this hack, put yq in PATH
+if command -v yq > /dev/null 2>&1; then
+	YQ=yq
+else
+	YQ=./yq
+fi
+
+MODS=$($YQ length manifest.yml)
 
 build_with_waf()
 {
@@ -75,7 +82,7 @@ pack_staged_gamedir()
 }
 
 for (( i = 0 ; i < MODS ; i++ )); do
-	BRANCH=$(./yq -r ".[$i].branch" manifest.yml)
+	BRANCH=$($YQ -r ".[$i].branch" manifest.yml)
 
 	GAMEDIR="" # expected to be set within build_hlsdk_portable_branch
 

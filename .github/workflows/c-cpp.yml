@@ -1,18 +1,11 @@
 name: Build & Deploy HLSDK
 on: [push, pull_request]
 jobs:
-  get_prev_runid:
-    runs-on: ubuntu-latest
-    outputs:
-      value: ${{ steps.do.outputs.value }}
+  cleanup:
+    runs-on: self-hosted
     steps:
-      - id: do
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          value=$(gh run -R ${{ github.repository }} list -b${{ github.ref_name }} -ssuccess -L1 --json databaseId -q'.[0].databaseId')
-          echo "Last run ID is $value"
-          echo "value=$value" >> "$GITHUB_OUTPUT"
+    - name: Cleanup
+      run: rm -rf .* || true
   build:
     runs-on: ${{ matrix.os }}
     needs: get_prev_runid
@@ -21,28 +14,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-20.04
+          - os: self-hosted
             targetos: linux
             targetarch: amd64
-          - os: ubuntu-20.04
+          - os: self-hosted
             targetos: linux
             targetarch: i386
-          - os: ubuntu-20.04
+          - os: self-hosted
             targetos: linux
             targetarch: arm64
-          - os: ubuntu-20.04
+          - os: self-hosted
             targetos: linux
             targetarch: armhf
-          - os: ubuntu-20.04
-            targetos: linux
-            targetarch: riscv64
-          - os: ubuntu-20.04
-            targetos: linux
-            targetarch: ppc64el
-          - os: windows-latest
+          - os: self-hosted
             targetos: win32
             targetarch: amd64
-          - os: windows-2019 # always use the oldest possible for 32-bit because of older compilers, and better support of certain legacy OSes
+          - os: self-hosted
             targetos: win32
             targetarch: i386
           - os: macos-14 # arm64 as per github documentation
@@ -60,29 +47,23 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-    - name: Install dependencies
-      run: bash scripts/gha/deps_${{ matrix.targetos }}.sh
-    - name: Restore object files
-      uses: actions/cache/restore@v4
+    - name: Cache
+      uses: actions/cache@v4
+      if: ${{ runner.environment == 'github-hosted' }}
       with:
-        path: |
-          hlsdk-portable/build
-        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-${{ needs.get_prev_runid.outputs.value }}
+        path: .wafcache
+        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-wafcache
+    - name: Install dependencies
+      run: bash scripts/gha/${{ runner.environment }}/deps_${{ matrix.targetos }}.sh
     - name: Build HLSDK
       env:
         FWGS_PFX_PASSWORD: ${{ secrets.FWGS_PFX_PASSWORD }}
-      run: bash scripts/gha/build_${{ matrix.targetos }}.sh
+      run: bash scripts/gha/${{ runner.environment }}/build_${{ matrix.targetos }}.sh
     - name: Upload HLSDK (artifacts)
       uses: actions/upload-artifact@v4
       with:
         name: artifact-${{ matrix.targetos }}-${{ matrix.targetarch }}
         path: out/*
-    - name: Save object files
-      uses: actions/cache/save@v4
-      with:
-        path: |
-          hlsdk-portable/build
-        key: ${{ runner.os }}-${{ matrix.targetos }}-${{ matrix.targetarch }}-${{ github.job }}
   release:
     name: "Upload releases"
     runs-on: ubuntu-latest
@@ -98,7 +79,7 @@ jobs:
           --yes \
           --cleanup-tag \
           --repo "$GITHUB_REPOSITORY" || true
-        sleep 20s
+        sleep 5s
         gh run download "$GITHUB_RUN_ID" \
           --dir out/ \
           --repo "$GITHUB_REPOSITORY"
@@ -112,7 +93,7 @@ jobs:
         echo "Repackaged artifacts:"
         ls -R
         popd
-        sleep 20s
+        sleep 5s
         gh release create "$RELEASE_TAG" out/* \
           --title "HLSDK Mega Continuous ${{ github.ref_name }} Build" \
           --target $GITHUB_SHA \

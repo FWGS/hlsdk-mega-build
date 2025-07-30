@@ -6,29 +6,37 @@ build_with_waf()
 {
 	local WAF_ENABLE_VGUI_OPTION=''
 	local WAF_ENABLE_AMD64_OPTION=''
-
-	# run build in it's out build folder
-	export WAFLOCK=".lock-waf_$1"
+	local WAF_ENABLE_MSVC_WINE=''
+	local WAF_ENABLE_CROSS_COMPILE_ENV=''
 
 	if [ "$GH_CPU_ARCH" == "amd64" ]; then
 		WAF_ENABLE_AMD64_OPTION="-8"
 	elif [ "$GH_CPU_ARCH" == "i386" ]; then
 		# not all waf-based hlsdk trees have vgui support
 		python waf --help | grep 'enable-vgui' && WAF_ENABLE_VGUI_OPTION=--enable-vgui
-
-		export CXXFLAGS="-I../../external"
 	fi
 
-	python waf -o "build/$1" \
+	if [ "$MSVC_WINE" -ne 0 ]; then
+		export MSVC_WINE_PATH=/home/runner/msvc
+		WAF_ENABLE_MSVC_WINE=--enable-msvc-wine
+	fi
+
+	if [ -n "$CROSS_COMPILE" ]; then
+		WAF_ENABLE_CROSS_COMPILE=--enable-cross-compile-env
+	fi
+
+	export WAFCACHE_STATS=1
+
+	python waf \
 		configure \
 			--disable-werror \
+			--enable-wafcache \
 			$WAF_ENABLE_AMD64_OPTION \
 			$WAF_ENABLE_VGUI_OPTION \
+			$WAF_ENABLE_MSVC_WINE \
+			$WAF_ENABLE_CROSS_COMPILE_ENV \
 		install \
 			--destdir=../stage || return 1
-
-	unset WAFLOCK
-	unset CXXFLAGS
 
 	return 0
 }

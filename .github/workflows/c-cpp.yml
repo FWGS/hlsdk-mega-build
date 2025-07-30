@@ -41,7 +41,6 @@ jobs:
       YQ_VERSION: 4.44.6
 #      WAFCACHE: ~/wafcache
       WAFCACHE_STATS: 1
-      MSVC_WINE_PATH: /home/runner/msvc
       GH_CPU_OS: ${{ matrix.targetos }}
       GH_CPU_ARCH: ${{ matrix.targetarch }}
     steps:

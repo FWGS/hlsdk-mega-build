@@ -23,7 +23,7 @@ build_with_waf()
 		python waf --help | grep 'enable-vgui' && WAF_ENABLE_VGUI_OPTION=--enable-vgui
 	fi
 
-	if [ "$MSVC_WINE" -ne 0 ]; then
+	if [ -n "$MSVC_WINE_PATH" ]; then
 		WAF_ENABLE_MSVC_WINE=--enable-msvc-wine
 	fi
 

@@ -26,12 +26,31 @@ jobs:
           - os: self-hosted
             targetos: linux
             targetarch: armhf
-          - os: windows-latest
-            targetos: win32
+
+          # Android systems
+          - os: self-hosted
+            targetos: android
             targetarch: amd64
           - os: self-hosted
+            targetos: android
+            targetarch: i386
+          - os: self-hosted
+            targetos: android
+            targetarch: arm64
+          - os: self-hosted
+            targetos: android
+            targetarch: armv7l
+
+          # Windows systems
+          - os: windows-latest # can be built on GitHub VMs, with relatively latest compiler
+            targetos: win32
+            targetarch: amd64
+          - os: self-hosted # built with older MSVC in Wine to target XP
             targetos: win32
             targetarch: i386
+
+
+          # macOS systems, built on GitHub macOS VMs
           - os: macos-14 # arm64 as per github documentation
             targetos: apple
             targetarch: arm64

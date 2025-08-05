@@ -13,6 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # GNU/Linux systems
           - os: self-hosted
             targetos: linux
             targetarch: amd64
@@ -25,7 +26,7 @@ jobs:
           - os: self-hosted
             targetos: linux
             targetarch: armhf
-          - os: self-hosted
+          - os: windows-latest
             targetos: win32
             targetarch: amd64
           - os: self-hosted

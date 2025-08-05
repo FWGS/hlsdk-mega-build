@@ -14,21 +14,12 @@ build_with_waf()
 	local WAF_ENABLE_VGUI_OPTION=''
 	local WAF_ENABLE_AMD64_OPTION=''
 	local WAF_ENABLE_MSVC_WINE=''
-	local WAF_ENABLE_CROSS_COMPILE_ENV=''
 
 	if [ "$GH_CPU_ARCH" == "amd64" ]; then
 		WAF_ENABLE_AMD64_OPTION="-8"
 	elif [ "$GH_CPU_ARCH" == "i386" ]; then
 		# not all waf-based hlsdk trees have vgui support
 		python waf --help | grep 'enable-vgui' && WAF_ENABLE_VGUI_OPTION=--enable-vgui
-	fi
-
-	if [ -n "$MSVC_WINE_PATH" ]; then
-		WAF_ENABLE_MSVC_WINE=--enable-msvc-wine
-	fi
-
-	if [ -n "$CROSS_COMPILE" ]; then
-		WAF_ENABLE_CROSS_COMPILE_ENV=--enable-cross-compile-env
 	fi
 
 	python waf \
@@ -39,6 +30,7 @@ build_with_waf()
 			$WAF_ENABLE_VGUI_OPTION \
 			$WAF_ENABLE_MSVC_WINE \
 			$WAF_ENABLE_CROSS_COMPILE_ENV \
+			$WAF_CONFIGURE_OPTS \
 		install \
 			--destdir=../stage || return 1
 

@@ -17,7 +17,7 @@ build_with_waf()
 
 	if [ "$GH_CPU_ARCH" == "amd64" ]; then
 		WAF_ENABLE_AMD64_OPTION="-8"
-	elif [ "$GH_CPU_ARCH" == "i386" ]; then
+	elif [ "$GH_CPU_ARCH" == "i386" ] && ( [ "$GH_CPU_OS" == "win32" ] || [ "$GH_CPU_OS" == "linux" ] || [ "$GH_CPU_OS" == "apple" ] ); then
 		# not all waf-based hlsdk trees have vgui support
 		python waf --help | grep 'enable-vgui' && WAF_ENABLE_VGUI_OPTION=--enable-vgui
 	fi

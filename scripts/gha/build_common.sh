@@ -26,6 +26,7 @@ build_with_waf()
 		configure \
 			--disable-werror \
 			--enable-wafcache \
+			--enable-poly-opt --enable-lto \
 			$WAF_ENABLE_AMD64_OPTION \
 			$WAF_ENABLE_VGUI_OPTION \
 			$WAF_ENABLE_MSVC_WINE \

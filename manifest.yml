@@ -23,6 +23,7 @@
         depot_ids: [1, 130, 96]
 
 # FIXME: implement alternate libraries for bot10, bubblemod, hlfixed, opforfixed, etc
+# TODO: Add miniag and xen-warrior
 
 - branch: RockCrowbar19
 - branch: aghl
@@ -38,6 +39,7 @@
 - branch: clcampaign
 - branch: cracklife
 - branch: decay-pc
+- branch: delta_particles
 - branch: dmc
 - branch: echoes
 - branch: eftd

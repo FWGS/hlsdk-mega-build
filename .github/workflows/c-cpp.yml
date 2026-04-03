@@ -1,11 +1,14 @@
 name: Build & Deploy HLSDK
 on: [push, pull_request]
 jobs:
-  cleanup:
-    runs-on: self-hosted
-    steps:
-    - name: Cleanup
-      run: rm -rf .* || true
+
+# !!!RESTORE WHEN SELF-HOSTED RUNNER WILL BE USED AGAIN!!!
+
+#  cleanup:
+#    runs-on: self-hosted
+#    steps:
+#    - name: Cleanup
+#      run: rm -rf .* || true
   build:
     runs-on: ${{ matrix.os }}
     continue-on-error: true
@@ -45,9 +48,13 @@ jobs:
           - os: windows-latest # can be built on GitHub VMs, with relatively latest compiler
             targetos: win32
             targetarch: amd64
-          - os: self-hosted # built with older MSVC in Wine to target XP
-            targetos: win32
-            targetarch: i386
+
+          # Disabled 32-bit Windows until somebody proves me that we do in fact want 32-bit
+          # Windows builds, considering that all mods support it in the first place
+
+          # - os: self-hosted # built with older MSVC in Wine to target XP
+          #   targetos: win32
+          #   targetarch: i386
 
 
           # macOS systems, built on GitHub macOS VMs

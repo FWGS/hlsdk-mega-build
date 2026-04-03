@@ -26,7 +26,7 @@ build_with_waf()
 		configure \
 			--disable-werror \
 			--enable-wafcache \
-			--enable-poly-opt --enable-lto \
+			-T release \
 			$WAF_ENABLE_AMD64_OPTION \
 			$WAF_ENABLE_VGUI_OPTION \
 			$WAF_ENABLE_MSVC_WINE \
@@ -41,20 +41,17 @@ build_with_waf()
 build_with_cmake()
 {
 	# Android only for now
-	mkdir -p build || return 1
-	pushd build || return 1
 
 	# remove CMake cache to start configuration from zero
-	rm -rf CMakeCache.txt
+	rm -rf build/CMakeCache.txt
 
-	cmake -GNinja \
-		-DCMAKE_INSTALL_PREFIX=../../stage \
+	cmake -B build -GNinja \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=../stage \
 		$CMAKE_CONFIGURE_OPTS \
-		../
+		. || return 1
 
-	ninja install || return 1
-
-	popd || return 1
+	ninja -C build install || return 1
 
 	return 0
 }

@@ -13,7 +13,6 @@ build_with_waf()
 {
 	local WAF_ENABLE_VGUI_OPTION=''
 	local WAF_ENABLE_AMD64_OPTION=''
-	local WAF_ENABLE_MSVC_WINE=''
 
 	if [ "$GH_CPU_ARCH" == "amd64" ]; then
 		WAF_ENABLE_AMD64_OPTION="-8"
@@ -22,14 +21,13 @@ build_with_waf()
 		python waf --help | grep 'enable-vgui' && WAF_ENABLE_VGUI_OPTION=--enable-vgui
 	fi
 
-	python waf \
+	python waf --jobs=$(( $(nproc) + 1 )) \
 		configure \
 			--disable-werror \
-			--enable-wafcache \
+			--enable-msvcdeps \
 			-T release \
 			$WAF_ENABLE_AMD64_OPTION \
 			$WAF_ENABLE_VGUI_OPTION \
-			$WAF_ENABLE_MSVC_WINE \
 			$WAF_ENABLE_CROSS_COMPILE_ENV \
 			$WAF_CONFIGURE_OPTS \
 		install \

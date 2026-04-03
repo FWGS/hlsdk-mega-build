@@ -114,8 +114,30 @@ jobs:
         ls -R
         popd
         sleep 5s
-        gh release create "$RELEASE_TAG" out/* \
+        gh release create "$RELEASE_TAG" \
           --title "HLSDK Mega Continuous ${{ github.ref_name }} Build" \
           --target $GITHUB_SHA \
           --repo "$GITHUB_REPOSITORY" \
           --prerelease
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-android-amd64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-android-arm64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-android-armv7l.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-android-i386.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-apple-amd64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-apple-arm64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-linux-amd64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-linux-arm64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-linux-armhf.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-linux-i386.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip

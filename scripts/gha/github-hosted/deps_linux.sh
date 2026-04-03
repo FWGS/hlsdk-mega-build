@@ -8,7 +8,7 @@ declare -A BASE_BUILD_PACKAGES
 BASE_BUILD_PACKAGES[common]=""
 BASE_BUILD_PACKAGES[amd64]="build-essential"
 BASE_BUILD_PACKAGES[i386]="gcc-multilib g++-multilib"
-BASE_BUILD_PACKAGES[arm64]="crossbuild-essential-arm64"
+BASE_BUILD_PACKAGES[arm64]="build-essential"
 BASE_BUILD_PACKAGES[armhf]="crossbuild-essential-armhf"
 BASE_BUILD_PACKAGES[riscv64]="crossbuild-essential-riscv64"
 BASE_BUILD_PACKAGES[ppc64el]="crossbuild-essential-ppc64el"
@@ -19,7 +19,7 @@ regenerate_sources_list()
 	sudo rm /etc/apt/sources.list
 	sudo rm -rf /etc/apt/sources.list.d
 
-	for i in focal focal-updates focal-backports focal-security; do
+	for i in jammy jammy-updates jammy-backports jammy-security; do
 		echo "deb [arch=$GH_CPU_ARCH] http://azure.ports.ubuntu.com/ubuntu-ports $i main universe" | sudo tee -a /etc/apt/sources.list
 		echo "deb [arch=amd64] http://azure.archive.ubuntu.com/ubuntu $i main universe" | sudo tee -a /etc/apt/sources.list
 	done

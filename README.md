@@ -28,7 +28,8 @@ The `deps` scripts prepare to build environment for a specified target. The `bui
 
 ## TODO
 
-- [ ] Support other build systems than Waf and other repos than `hlsdk-portable`.
+- [x] Support other build systems than Waf
+- [ ] Support other repos than `hlsdk-portable`.
 - [ ] Add more build targets, ideally all supported by Xash3D FWGS.
 - [ ] Implement a client which will look up which game libraries are missing for selected gamedir and download them from this repository, optionally download the game files from ModDB and Steam, apply patches, have a beautiful GUI......
 - [ ] Cache object files for faster rebuilds.

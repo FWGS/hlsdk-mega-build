@@ -38,6 +38,24 @@ build_with_waf()
 	return 0
 }
 
+build_with_cmake()
+{
+	# Android only for now
+	mkdir -p build || return 1
+	pushd build || return 1
+
+	cmake -GNinja \
+		-DCMAKE_INSTALL_PREFIX=../../stage \
+		$CMAKE_CONFIGURE_OPTS \
+		../
+
+	ninja install || return 1
+
+	popd || return 1
+
+	return 0
+}
+
 build_hlsdk_portable_branch()
 {
 	# hlsdk-portable has mods in git branches
@@ -46,7 +64,12 @@ build_hlsdk_portable_branch()
 	# all hlsdk-portable branches have mod_options.txt file
 	GAMEDIR=$(grep GAMEDIR mod_options.txt | tr '=' ' ' | cut -d' ' -f2 )
 
-	build_with_waf "$GAMEDIR"
+	if [ $USE_CMAKE -eq 1 ]; then
+		build_with_cmake "$GAMEDIR"
+	else
+		build_with_waf "$GAMEDIR"
+	fi
+
 	SUCCESS=$?
 
 	if [ $SUCCESS -eq 2 ]; then # means something went wrong during install phase

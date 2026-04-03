@@ -44,6 +44,9 @@ build_with_cmake()
 	mkdir -p build || return 1
 	pushd build || return 1
 
+	# remove CMake cache to start configuration from zero
+	rm -rf CMakeCache.txt
+
 	cmake -GNinja \
 		-DCMAKE_INSTALL_PREFIX=../../stage \
 		$CMAKE_CONFIGURE_OPTS \

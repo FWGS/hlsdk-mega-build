@@ -25,8 +25,8 @@ regenerate_sources_list()
 	done
 }
 
-if [ "$GH_CPU_ARCH" != "amd64" ] && [ -n "$GH_CPU_ARCH" ]; then
-	if [ "$GH_CPU_ARCH" != "i386" ]; then
+if [ "$GH_CPU_ARCH" != "amd64" ] && [ "$GH_CPU_ARCH" != "arm64" ] && [ -n "$GH_CPU_ARCH" ]; then
+	if [ "$GH_CPU_ARCH" != "i386" ] && [ "$GH_CPU_ARCH" != "armhf" ]; then
 		regenerate_sources_list
 	fi
 	sudo dpkg --add-architecture "$GH_CPU_ARCH"

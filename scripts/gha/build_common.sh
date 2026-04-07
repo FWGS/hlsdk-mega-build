@@ -62,7 +62,16 @@ build_hlsdk_portable_branch()
 	# all hlsdk-portable branches have mod_options.txt file
 	GAMEDIR=$(grep GAMEDIR mod_options.txt | tr '=' ' ' | cut -d' ' -f2 )
 
-	if [ $USE_CMAKE -eq 1 ]; then
+	# write git metadata sidecar so the release job can build manifest.json
+	mkdir -p ../out
+	printf '{"branch":"%s","commit":"%s","tree":"%s","url":"%s"}\n' \
+		"$1" \
+		"$(git rev-parse HEAD)" \
+		"$(git rev-parse HEAD^{tree})" \
+		"$(git remote get-url origin)" \
+		> "../out/gitinfo-${GAMEDIR}-${GH_CPU_OS}-${GH_CPU_ARCH}.json"
+
+	if [ "$USE_CMAKE" -eq 1 ]; then
 		build_with_cmake "$GAMEDIR"
 	else
 		build_with_waf "$GAMEDIR"
@@ -70,11 +79,11 @@ build_hlsdk_portable_branch()
 
 	SUCCESS=$?
 
-	if [ $SUCCESS -eq 2 ]; then # means something went wrong during install phase
+	if [ "$SUCCESS" -eq 2 ]; then # means something went wrong during install phase
 		rm -rf "../stage/$GAMEDIR" # better cleanup
 	fi
 
-	if [ $SUCCESS -ne 0 ]; then
+	if [ "$SUCCESS" -ne 0 ]; then
 		return 2
 	fi
 

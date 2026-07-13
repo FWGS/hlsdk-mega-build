@@ -25,7 +25,6 @@
 # FIXME: implement alternate libraries for bot10, bubblemod, hlfixed, opforfixed, etc
 # TODO: Add miniag and xen-warrior
 
-- branch: RockCrowbar19
 - branch: aghl
 - branch: aom
 - branch: aomdc
@@ -37,6 +36,7 @@
 - branch: caseclosed
 - branch: CAd
 - branch: clcampaign
+- branch: counter-life
 - branch: cracklife
 - branch: decay-pc
 - branch: delta_particles
@@ -44,7 +44,7 @@
 - branch: echoes
 - branch: eftd
 - branch: induction_1.2
-- branch: invasion
+- branch: insecure
 - branch: half-secret
 - branch: half-screwed
 - branch: halloween

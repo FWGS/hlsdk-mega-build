@@ -10,10 +10,11 @@ The definition of mods is kept within `manifest.yml` file which is a YAML file c
 |---------|-------|
 |`branch` |Branch name used for in the repository.|
 |`repo`   |URL of Git repository. If not set, defaults to hlsdk-portable.|
-|`dl_name`|If set, it means that game directory specified in mod_options.txt differs from branch name.|
+|`dl_name`|Name of the published archive and manifest.json key. If not set, defaults to the game directory from mod_options.txt. Must be set when several branches share a game directory (e.g. bot10 and bubblemod both install into valve).|
 |`games`  |An array of game objects, see below. Used to automatically fetching game libraries.|
 |`build_system`|A string that contains preferred build system, can be either `"cmake"` or `"waf"`. If not set, `waf` is the default|
 |`configure_opts`|Passed verbatim into build systen's configure stage, if such exists|
+|`commit` |If set, this exact revision is checked out instead of the branch tip.|
 
 ### Game object
 
@@ -28,10 +29,12 @@ The definition of mods is kept within `manifest.yml` file which is a YAML file c
 
 The `deps` scripts prepare to build environment for a specified target. The `build` scripts parse manifest, run build for all branches and create archives for all games in `out` directory. After that it's collected and published on GitHub releases page.
 
+If a `patches/<branch>` directory exists, the `*.patch` files in it are applied with `git apply` after checkout, before the build. See `patches/README.md`.
+
 ## TODO
 
 - [x] Support other build systems than Waf
-- [ ] Support other repos than `hlsdk-portable`.
+- [x] Support other repos than `hlsdk-portable`.
 - [ ] Add more build targets, ideally all supported by Xash3D FWGS.
 - [ ] Implement a client which will look up which game libraries are missing for selected gamedir and download them from this repository, optionally download the game files from ModDB and Steam, apply patches, have a beautiful GUI......
 - [ ] Cache object files for faster rebuilds.

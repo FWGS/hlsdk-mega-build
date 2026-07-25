@@ -59,6 +59,7 @@ documented separately — consumers must ignore unknown fields, not reject them.
 | `...source.commit`                 | string  | required | never       | Upstream commit hash. |
 | `...source.tree`                   | string  | required | never       | Upstream tree hash (`HEAD^{tree}`). Useful for content-addressed comparison across branches. |
 | `...source.url`                    | string  | required | never       | Upstream remote URL (typically `https://github.com/FWGS/hlsdk-portable`). |
+| `...source.patched`                | boolean | optional | never       | `true` if `hlsdk-mega-build` patches were applied on top of the upstream commit — `tree` then refers to the unpatched upstream tree. Absent or `false` means a pristine upstream build. |
 
 ### Platform key format
 

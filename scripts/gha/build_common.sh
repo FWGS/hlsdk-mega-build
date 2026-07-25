@@ -78,8 +78,26 @@ build_with_cmake()
 
 build_hlsdk_branch()
 {
-	# hlsdk source trees have mods in git branches
-	git checkout "$1" || return 1
+	local PATCH PATCHED=false
+
+	# clean the leftovers from patches, keep untracked directories
+	git reset --hard -q || return 1
+	git clean -qfd -e build
+
+	# if exact revision is set, use it, otherwise use the branch
+	if [ -n "$5" ]; then
+		git checkout "$5" || return 1
+	else
+		git checkout "$1" || return 1
+	fi
+
+	# apply patches
+	for PATCH in "../patches/$1"/*.patch; do
+		[ -e "$PATCH" ] || continue
+		echo "Applying $PATCH"
+		git apply -v "$PATCH" || return 1
+		PATCHED=true
+	done
 
 	# all hlsdk-portable derived trees have mod_options.txt file
 	GAMEDIR=$(grep GAMEDIR mod_options.txt | tr '=' ' ' | cut -d' ' -f2 )
@@ -117,11 +135,12 @@ build_hlsdk_branch()
 	# only written on a successful build so the manifest never references
 	# a (gamedir, platform) pair that has no corresponding zip.
 	mkdir -p ../out
-	printf '{"branch":"%s","commit":"%s","tree":"%s","url":"%s"}\n' \
+	printf '{"branch":"%s","commit":"%s","tree":"%s","url":"%s","patched":%s}\n' \
 		"$1" \
 		"$(git rev-parse HEAD)" \
 		"$(git rev-parse HEAD^{tree})" \
 		"$(git remote get-url origin)" \
+		"$PATCHED" \
 		> "../out/gitinfo-${PACK_NAME}-${GH_CPU_OS}-${GH_CPU_ARCH}.json"
 
 	return 0
@@ -145,6 +164,7 @@ for (( i = 0 ; i < MODS ; i++ )); do
 	MOD_BUILD_SYSTEM=$($YQ -r ".[$i].build_system // \"waf\"" manifest.yml)
 	DL_NAME=$($YQ -r ".[$i].dl_name // \"\"" manifest.yml)
 	MOD_CONFIGURE_OPTS=$($YQ -r ".[$i].configure_opts // \"\"" manifest.yml)
+	MOD_COMMIT=$($YQ -r ".[$i].commit // \"\"" manifest.yml)
 	REPO_DIR=$(basename "$REPO" .git)
 
 	GAMEDIR=""  # expected to be set within build_hlsdk_branch
@@ -157,7 +177,7 @@ for (( i = 0 ; i < MODS ; i++ )); do
 	fi
 
 	pushd "$REPO_DIR" || exit 1
-	build_hlsdk_branch "$BRANCH" "$MOD_BUILD_SYSTEM" "$DL_NAME" "$MOD_CONFIGURE_OPTS"
+	build_hlsdk_branch "$BRANCH" "$MOD_BUILD_SYSTEM" "$DL_NAME" "$MOD_CONFIGURE_OPTS" "$MOD_COMMIT"
 	SUCCESS=$?
 	popd || exit 1
 

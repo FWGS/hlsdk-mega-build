@@ -12,6 +12,8 @@ The definition of mods is kept within `manifest.yml` file which is a YAML file c
 |`repo`   |URL of Git repository. If not set, defaults to hlsdk-portable.|
 |`dl_name`|If set, it means that game directory specified in mod_options.txt differs from branch name.|
 |`games`  |An array of game objects, see below. Used to automatically fetching game libraries.|
+|`build_system`|A string that contains preferred build system, can be either `"cmake"` or `"waf"`. If not set, `waf` is the default|
+|`configure_opts`|Passed verbatim into build systen's configure stage, if such exists|
 
 ### Game object
 

@@ -33,6 +33,7 @@ build_with_waf()
 			$WAF_ENABLE_VGUI_OPTION \
 			$WAF_ENABLE_CROSS_COMPILE_ENV \
 			$WAF_CONFIGURE_OPTS \
+			$2 \
 		install \
 			--destdir="../stage/$1" || return 1
 
@@ -67,6 +68,7 @@ build_with_cmake()
 		-DCMAKE_INSTALL_PREFIX="../stage/$1" \
 		$CMAKE_64BIT_OPTION \
 		$CMAKE_CONFIGURE_OPTS \
+		$2 \
 		. || return 1
 
 	cmake --build build $CMAKE_BUILD_CONFIG_OPTION --target install || return 1
@@ -93,9 +95,9 @@ build_hlsdk_branch()
 
 	# use cmake if requested by platform or by a mod tree
 	if [ "${USE_CMAKE:-0}" -eq 1 ] || [ "$2" == "cmake" ]; then
-		build_with_cmake "$PACK_NAME"
+		build_with_cmake "$PACK_NAME" "$4"
 	elif [ "$2" == "waf" ]; then
-		build_with_waf "$PACK_NAME"
+		build_with_waf "$PACK_NAME" "$4"
 	else
 		echo "error: unknown build_system '$2' for branch $1" >&2
 		return 1
@@ -142,6 +144,7 @@ for (( i = 0 ; i < MODS ; i++ )); do
 	REPO=$($YQ -r ".[$i].repo // \"$DEFAULT_REPO\"" manifest.yml)
 	MOD_BUILD_SYSTEM=$($YQ -r ".[$i].build_system // \"waf\"" manifest.yml)
 	DL_NAME=$($YQ -r ".[$i].dl_name // \"\"" manifest.yml)
+	MOD_CONFIGURE_OPTS=$($YQ -r ".[$i].configure_opts // \"\"" manifest.yml)
 	REPO_DIR=$(basename "$REPO" .git)
 
 	GAMEDIR=""  # expected to be set within build_hlsdk_branch
@@ -154,7 +157,7 @@ for (( i = 0 ; i < MODS ; i++ )); do
 	fi
 
 	pushd "$REPO_DIR" || exit 1
-	build_hlsdk_branch "$BRANCH" "$MOD_BUILD_SYSTEM" "$DL_NAME"
+	build_hlsdk_branch "$BRANCH" "$MOD_BUILD_SYSTEM" "$DL_NAME" "$MOD_CONFIGURE_OPTS"
 	SUCCESS=$?
 	popd || exit 1
 

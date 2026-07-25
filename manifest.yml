@@ -81,3 +81,5 @@
   dl_name: featureful # GAMEDIR in this branch's mod_options.txt is 'featureful'
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+  # constexpr std::pair in game_shared needs C++14 with NDK's libc++, drop when fixed in upstream
+  configure_opts: -DCMAKE_CXX_STANDARD=14

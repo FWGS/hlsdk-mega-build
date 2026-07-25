@@ -50,7 +50,8 @@
 - branch: dmc
 - branch: echoes
 - branch: eftd
-- branch: induction_1.2
+# induction_1.2 is superseded by the halflife-featureful induction branch
+#- branch: induction_1.2
 - branch: insecure
 - branch: half-secret
 - branch: half-screwed
@@ -71,3 +72,12 @@
 - branch: theyhunger
 - branch: tot
 - branch: zombie-x
+
+# Mods based on FreeSlave's Featureful SDK. Upstream only maintains CMake.
+- branch: induction
+  repo: https://github.com/FreeSlave/halflife-featureful
+  build_system: cmake
+- branch: field_intensity_1.7
+  dl_name: featureful # GAMEDIR in this branch's mod_options.txt is 'featureful'
+  repo: https://github.com/FreeSlave/halflife-featureful
+  build_system: cmake

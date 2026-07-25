@@ -6,8 +6,8 @@ cd "$GITHUB_WORKSPACE" || exit 1
 # "booo, bash feature!", -- posix sh users, probably
 declare -A BASE_BUILD_PACKAGES
 
-# mods might want opengl headers, install it them. Should also work in cross-compile environment.
-BASE_BUILD_PACKAGES[common]="mesa-common-dev"
+# mods might want opengl or SDL headers. Should also work in cross-compile environment.
+BASE_BUILD_PACKAGES[common]="mesa-common-dev libsdl2-dev"
 BASE_BUILD_PACKAGES[amd64]="build-essential"
 BASE_BUILD_PACKAGES[i386]="gcc-multilib g++-multilib"
 BASE_BUILD_PACKAGES[arm64]="build-essential"

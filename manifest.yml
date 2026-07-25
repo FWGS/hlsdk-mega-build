@@ -32,8 +32,14 @@
 - branch: asheep
 - branch: biglolly
 - branch: blackops
+
+# those two are mods for Half-Life, and install into the same directory
+# our scripts are quite stupid for case like this yet, so rename the resulting zip
 - branch: bot10
+  dl_name: bot10
 - branch: bubblemod
+  dl_name: bubblemod
+
 - branch: caseclosed
 - branch: CAd
 - branch: clcampaign

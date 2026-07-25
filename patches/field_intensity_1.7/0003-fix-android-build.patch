@@ -1,0 +1,23 @@
+From 8098183b531aa18932b08a8682c3210329240db6 Mon Sep 17 00:00:00 2001
+From: hahayoutookind <georgijcerenkov074@gmail.com>
+Date: Mon, 16 Mar 2026 23:30:10 +0800
+Subject: [PATCH] Include GLES/gl.h header instead of GL/gl.h for Android in
+ CFrustum.cpp
+
+---
+ cl_dll/particleman/CFrustum.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/cl_dll/particleman/CFrustum.cpp b/cl_dll/particleman/CFrustum.cpp
+index 0db418d32a..e874de2bb9 100644
+--- a/cl_dll/particleman/CFrustum.cpp
++++ b/cl_dll/particleman/CFrustum.cpp
+@@ -23,6 +23,8 @@
+ #else
+ #include <OpenGL/gl.h>
+ #endif //TARGET_OS_IOS
++#elif __ANDROID__
++#include <GLES/gl.h>
+ #else
+ #include <GL/gl.h>
+ #endif //__APPLE__

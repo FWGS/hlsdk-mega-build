@@ -1,0 +1,22 @@
+From fb6ecee51f9b18b5d3128d5270fb90dc284c4bdd Mon Sep 17 00:00:00 2001
+From: hahayoutookind <georgijcerenkov074@gmail.com>
+Date: Mon, 16 Mar 2026 23:26:23 +0800
+Subject: [PATCH] Use newer C++ compiler version for Android
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ebc227a84c..550988a525 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -157,7 +157,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Android")
+ 	endif()
+ endif()
+ 
+-if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
++if(${CMAKE_SYSTEM_NAME} STREQUAL "iOS" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Darwin" OR ${CMAKE_SYSTEM_NAME} STREQUAL "Android")
+ 	set(CMAKE_CXX_STANDARD 14)
+ endif()
+ 

@@ -76,17 +76,34 @@ jobs:
       YQ_VERSION: 4.52.5
       GH_CPU_OS: ${{ matrix.targetos }}
       GH_CPU_ARCH: ${{ matrix.targetarch }}
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_MAXSIZE: 512M
+      # toolchains are reinstalled on every run, so the default mtime-based
+      # compiler check would invalidate the whole cache each time
+      CCACHE_COMPILERCHECK: content
+      CCACHE_SLOPPINESS: time_macros
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       with:
         submodules: recursive
+    - name: Restore ccache
+      if: matrix.targetos != 'win32'
+      uses: actions/cache@v4
+      with:
+        path: .ccache
+        key: ccache-${{ matrix.targetos }}-${{ matrix.targetarch }}-${{ github.run_id }}
+        restore-keys: |
+          ccache-${{ matrix.targetos }}-${{ matrix.targetarch }}-
     - name: Install dependencies
       run: bash scripts/gha/${{ runner.environment }}/deps_${{ matrix.targetos }}.sh
     - name: Build HLSDK
       env:
         FWGS_PFX_PASSWORD: ${{ secrets.FWGS_PFX_PASSWORD }}
       run: bash scripts/gha/${{ runner.environment }}/build_${{ matrix.targetos }}.sh
+    - name: Show ccache statistics
+      if: matrix.targetos != 'win32'
+      run: ccache -s
     - name: Upload HLSDK (artifacts)
       uses: actions/upload-artifact@v4
       with:

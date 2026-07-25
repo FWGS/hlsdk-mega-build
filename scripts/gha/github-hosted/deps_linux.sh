@@ -7,7 +7,7 @@ cd "$GITHUB_WORKSPACE" || exit 1
 declare -A BASE_BUILD_PACKAGES
 
 # mods might want opengl or SDL headers. Should also work in cross-compile environment.
-BASE_BUILD_PACKAGES[common]="mesa-common-dev libsdl2-dev"
+BASE_BUILD_PACKAGES[common]="mesa-common-dev libsdl2-dev ccache"
 BASE_BUILD_PACKAGES[amd64]="build-essential"
 BASE_BUILD_PACKAGES[i386]="gcc-multilib g++-multilib libsdl2-dev:i386"
 BASE_BUILD_PACKAGES[arm64]="build-essential"
@@ -39,6 +39,10 @@ sudo apt install aptitude || exit 2 # aptitude is just more reliable at resolvin
 
 # shellcheck disable=SC2086 # splitting is intended here
 sudo aptitude install -y ${BASE_BUILD_PACKAGES[common]} ${BASE_BUILD_PACKAGES[$GH_CPU_ARCH]} || exit 2
+
+# make sure /usr/lib/ccache has symlinks for the cross compilers that were
+# installed in the same transaction as ccache itself
+sudo update-ccache-symlinks || true
 
 ####################
 git clone --recursive https://github.com/FWGS/hlsdk-portable

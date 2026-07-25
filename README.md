@@ -37,5 +37,5 @@ If a `patches/<branch>` directory exists, the `*.patch` files in it are applied 
 - [x] Support other repos than `hlsdk-portable`.
 - [ ] Add more build targets, ideally all supported by Xash3D FWGS.
 - [ ] Implement a client which will look up which game libraries are missing for selected gamedir and download them from this repository, optionally download the game files from ModDB and Steam, apply patches, have a beautiful GUI......
-- [ ] Cache object files for faster rebuilds.
+- [x] Cache object files for faster rebuilds (ccache, everywhere except MSVC).
 - [ ] Make this run daily? Bi-weekly?

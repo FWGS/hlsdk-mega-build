@@ -45,6 +45,13 @@ build_with_cmake()
 	local CMAKE_64BIT_OPTION=''
 	local CMAKE_GENERATOR_OPTION='-GNinja'
 	local CMAKE_BUILD_CONFIG_OPTION=''
+	local CMAKE_CCACHE_OPTION=''
+
+	# ccache does not support MSVC and the Visual Studio generator ignores
+	# compiler launchers anyway
+	if command -v ccache > /dev/null 2>&1 && [ "$GH_CPU_OS" != "win32" ]; then
+		CMAKE_CCACHE_OPTION='-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache'
+	fi
 
 	# equivalent of waf's -8 flag: hlsdk CMakeLists append -m32 on x86_64
 	# hosts unless 64BIT is set. GoldSource only exists in 32-bit, so
@@ -66,6 +73,7 @@ build_with_cmake()
 	cmake -B build $CMAKE_GENERATOR_OPTION \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DCMAKE_INSTALL_PREFIX="../stage/$1" \
+		$CMAKE_CCACHE_OPTION \
 		$CMAKE_64BIT_OPTION \
 		$CMAKE_CONFIGURE_OPTS \
 		$2 \

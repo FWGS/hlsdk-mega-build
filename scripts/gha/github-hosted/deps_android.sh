@@ -9,3 +9,6 @@ rm android-ndk-r29-linux.zip
 mv android-ndk-r29 ndk
 
 git clone --recursive https://github.com/FWGS/hlsdk-portable
+
+# for CMAKE_C_COMPILER_LAUNCHER, usually preinstalled on GitHub images
+command -v ccache > /dev/null 2>&1 || sudo apt install -y ccache

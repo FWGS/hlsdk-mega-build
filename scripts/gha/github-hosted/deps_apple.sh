@@ -13,3 +13,6 @@ else
 fi
 
 git clone --recursive https://github.com/FWGS/hlsdk-portable
+
+# ccache for faster rebuilds, PATH masquerade is set up in build_apple.sh
+command -v ccache > /dev/null 2>&1 || brew install ccache

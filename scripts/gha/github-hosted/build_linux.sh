@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # "booo, bash feature!"
 declare -A ARCH_TRIPLET CROSS_COMPILE_CC CROSS_COMPILE_CXX

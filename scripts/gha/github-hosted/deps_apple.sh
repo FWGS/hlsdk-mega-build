@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # FIXME: GH_CPU_ARCH is used for crosscompiling but on apple it's also host CPU arch, for now
 if [ $GH_CPU_ARCH == "amd64" ]; then

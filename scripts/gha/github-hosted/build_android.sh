@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 export ANDROID_NDK_HOME=$GITHUB_WORKSPACE/ndk
 

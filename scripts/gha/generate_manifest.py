@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # Walks out/ after artifacts have been collected and writes out/manifest.json
 # describing every zip we shipped: which gamedir, which platform, which commit
 # it was built from, and a sha256 so downloaders can verify it.

@@ -1,4 +1,5 @@
 #!/bin/bash
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # TODO: remove this hack, put yq in PATH
 if command -v yq > /dev/null 2>&1; then

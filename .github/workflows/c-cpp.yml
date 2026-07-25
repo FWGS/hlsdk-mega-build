@@ -169,3 +169,18 @@ jobs:
         gh release upload --clobber "$RELEASE_TAG" out/*-linux-i386.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip
+    - name: Publish build status page
+      if: github.ref_name == 'master'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        RELEASE_TAG: continuous
+      run: |
+        python3 scripts/gha/generate_status_page.py
+        cd page
+        # single commit gh-pages to not bloat the repo, same as FWGS/server-list
+        git init -q -b gh-pages
+        git config user.name  "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add -A
+        git commit -q -m "publish ${{ github.run_id }} (${GITHUB_SHA:0:7})"
+        git push -q --force "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages

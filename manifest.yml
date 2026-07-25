@@ -77,6 +77,8 @@
 - branch: induction
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+  # hack for cmake 4.x which doesn't like 2.8 minimum required
+  configure_opts: -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 - branch: field_intensity_1.7
   dl_name: featureful # GAMEDIR in this branch's mod_options.txt is 'featureful'
   repo: https://github.com/FreeSlave/halflife-featureful

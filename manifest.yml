@@ -24,7 +24,7 @@
         depot_ids: [1, 130, 96]
 
 # FIXME: implement alternate libraries for bot10, bubblemod, hlfixed, opforfixed, etc
-# TODO: Add miniag and xen-warrior
+# TODO: Add miniag
 
 - branch: aghl
 - branch: aom
@@ -40,6 +40,12 @@
 - branch: bubblemod
   dl_name: bubblemod
 
+# HL Fixed branch
+- branch: hlfixed
+  dl_name: hlfixed
+- branch: opforfixed
+  dl_name: opforfixed
+
 - branch: caseclosed
 - branch: CAd
 - branch: clcampaign
@@ -50,8 +56,11 @@
 - branch: dmc
 - branch: echoes
 - branch: eftd
+
 # induction_1.2 is superseded by the halflife-featureful induction branch
-#- branch: induction_1.2
+- branch: induction_1.2
+  dl_name: induction_1.2
+
 - branch: insecure
 - branch: half-secret
 - branch: half-screwed
@@ -61,12 +70,21 @@
 - branch: noffice
 - branch: poke646
 - branch: poke646_vendetta
+- branch: ps2hl
+  build_system: cmake
 - branch: rebellion
 - branch: residual_point
 - branch: redempt
 - branch: sci
 - branch: sewer_beta
 - branch: sohl1.2
+
+# Xen Warrior
+- branch: sohl1.2
+  dl_name: xenwar
+  configure_opts: -DXENWARRIOR=1
+  build_system: cmake
+
 - branch: visitors
 - branch: thegate
 - branch: theyhunger
@@ -74,14 +92,23 @@
 - branch: zombie-x
 
 # Mods based on FreeSlave's Featureful SDK. Upstream only maintains CMake.
+- branch: featureful
+  repo: https://github.com/FreeSlave/halflife-featureful
+  build_system: cmake
 - branch: induction
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
   # hack for cmake 4.x which doesn't like 2.8 minimum required
   configure_opts: -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-- branch: field_intensity_1.7
-  dl_name: featureful # GAMEDIR in this branch's mod_options.txt is 'featureful'
+- branch: intense_force
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
-  # excercise commit pin and patch code path, drop once halflife-featureful#59 PR is accepted and merged (or the underlying issue fixed)
-  commit: e278bf9e90c5596ace30e29e995bdf6ffe1b01b3
+- branch: field_intensity_1.7
+  repo: https://github.com/FreeSlave/halflife-featureful
+  build_system: cmake
+
+# Mod by GT-Project Сat Team
+- branch: fwgs
+  repo: https://github.com/GT-Project-Cat/The-Last-Bullet-Updated-Code
+  dl_name: TLBUE
+  build_system: cmake

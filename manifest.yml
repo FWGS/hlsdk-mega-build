@@ -106,6 +106,9 @@
 - branch: field_intensity_1.7
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+- branch: sum
+  repo: https://github.com/FreeSlave/halflife-featureful
+  build_system: cmake
 
 # Mod by GT-Project Сat Team
 - branch: fwgs

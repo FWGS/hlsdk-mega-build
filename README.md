@@ -18,12 +18,43 @@ The definition of mods is kept within `manifest.yml` file which is a YAML file c
 
 ### Game object
 
-| Key   | Value |
-|-------|-------|
-|`title`|Human readable title of the game.|
-|`dir`  |Game directory name of the game.|
-|`steam`|If set, the game is available from Steam. The object must have `app_id` with Steam AppID and `depot_id` with array of **content** depot IDs.|
-|`moddb`|If set, the game is available from ModDB. The object must have `url` with ModDB page, `dl` with main ModDBs download link and array of `patches` links, if they are any|
+| Key             | Value |
+|-----------------|-------|
+|`title`          |Human readable title of the game.|
+|`dir`            |Array of directories to install from the unpacked content archive, the first one being the gamedir. Anything else in the archive is ignored. Spelled exactly as in the archive.|
+|`url`            |Canonical home page of the game.|
+|`dl_url`         |Download page or direct file link, depending on `dl_method`, of the latest version of the game.|
+|`dl_method`      |How to download `dl_url`: `moddb` (resolve with `scripts/moddb-download.sh`), `get` (plain HTTP GET), `get_with_redirect` (HTTP GET following redirects), `steam` (fetch from Steam, see the `steam` object), `none` (nothing to download).|
+|`need_browser_ua`|Boolean, enable if server returns 403 unless a browser User-Agent is sent. Only meaningful for `get`/`get_with_redirect`, as `moddb` always implies it. Defaults to `false`.|
+|`dl_sha256sum`   |sha256 checksum of the downloaded file, verify the checksum of the file before passing it to an unpacker.|
+|`unpack_method`  |Tool that unpacks the download: `unzip`, `unrar`, `7z`, `innoextract`, `unshield`, `cicdec`, `sfx_factory`.|
+|`unpack_root`    |Path inside the archive the game content is taken from. Unset means the archive root.|
+|`unpack_to`      |If set, the content at `unpack_root` is the gamedir content itself (if the archive carries no gamedir folder) and is installed into a directory with this name. If unset, `unpack_root` contains the gamedir folder(s) listed in `dir`.|
+|`steam`          |If set, the game is available from Steam. The object must have `app_id` with Steam AppID and `depot_ids` with array of **content** depot IDs.|
+
+## Client scripts
+
+- `scripts/moddb-download.sh <page-url> [output]` — resolves ModDB's start/mirror indirection and downloads a file from a ModDB downloads/addons page.
+- `scripts/sfx-factory-extract.sh <installer.exe> [dest]` — extracts a SFX-Factory! self-extracting installer (both the ZIP and ACE variants) without running it.
+- `scripts/download_mod.py <gamedir>` — downloads and installs the prebuilt game libraries for the current platform from the `continuous` release, driven by the published `manifest.json`.
+- `scripts/sample_mod_install.py <mod>` — sample end-to-end installer: fetches the game content per the `games` metadata above, verifies and unpacks it, then installs the game libraries via `download_mod.py`. Reads `manifest.yml` for now; will switch to the published `manifest.json` once the `games` metadata is embedded there.
+
+### Required tools
+
+The client scripts shell out to external tools depending on the `dl_method`/`unpack_method` of the game being installed. Only the ones a given mod actually uses are needed.
+
+| Tool                    | Needed for |
+|-----------------------=-|-----------|
+|`python3` (3.6+)         |All scripts.|
+|`PyYAML` (python module) |`sample_mod_install.py`, until it reads the generated `manifest.json` instead of `manifest.yml`.|
+|`curl`                   |`moddb-download.sh` (i.e. every `moddb` download).|
+|`unzip`                  |`unpack_method: unzip`.|
+|`unrar`                  |`unpack_method: unrar`.|
+|`7z`                     |`unpack_method: 7z`.|
+|`innoextract`            |`unpack_method: innoextract`.|
+|`unshield`               |`unpack_method: unshield`.|
+|`bsdtar` (libarchive)    |`unpack_method: sfx_factory`.|
+|`acefile` (python module)|`unpack_method: sfx_factory`.|
 
 ## Build scripts
 
@@ -38,4 +69,5 @@ If a `patches/<branch>` directory exists, the `*.patch` files in it are applied 
 - [ ] Add more build targets, ideally all supported by Xash3D FWGS.
 - [ ] Implement a client which will look up which game libraries are missing for selected gamedir and download them from this repository, optionally download the game files from ModDB and Steam, apply patches, have a beautiful GUI......
 - [x] Cache object files for faster rebuilds (ccache, everywhere except MSVC).
-- [ ] Make this run daily? Bi-weekly?
+- [x] Make this run daily? Bi-weekly?
+- [x] Machine-readable info on mod downloading and unpacking

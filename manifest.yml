@@ -1,25 +1,31 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
+# The format is documented in README.md
 ---
 - branch: master
   dl_name: valve
   games:
     - title: 'Half-Life'
-      dir: valve
+      dir: [valve]
       url: 'https://store.steampowered.com/app/70/HalfLife/'
+      dl_method: steam
       steam:
         app_id: 70
         depot_ids: [1, 71, 96]
 - branch: opfor
   games:
     - title: 'Half-Life: Opposing Force'
+      dir: [gearbox]
       url: 'https://store.steampowered.com/app/50/HalfLife_Opposing_Force/'
+      dl_method: steam
       steam:
         app_id: 50
         depot_ids: [1, 51, 96]
 - branch: bshift
   games:
     - title: 'Half-Life: Blue Shift'
+      dir: [bshift]
       url: 'https://store.steampowered.com/app/130/HalfLife_Blue_Shift/'
+      dl_method: steam
       steam:
         app_id: 130
         depot_ids: [1, 130, 96]
@@ -30,33 +36,59 @@
 - branch: aghl
   games:
     - title: 'Adrenaline Gamer'
+      dir: [ag]
       url: 'https://www.moddb.com/mods/adrenaline-gamer'
-      dl_url: 'https://www.moddb.com/mods/adrenaline-gamer/downloads/adrenaline-gamer-v66'
+      # OpenAG maintains the full mod package now, but hash may go stale suddenly,
+      # as the URL doesn't contain any versioning
+      dl_url: 'https://openag.pro/latest/ag.7z'
+      dl_method: get_with_redirect
+      dl_sha256sum: 1481ffec564599d5be5452e41c19664841b23f8eaee4617a092734d6862648ea
+      unpack_method: 7z
 - branch: aom
   games:
     - title: 'Afraid of Monsters'
       url: 'https://www.moddb.com/mods/afraid-of-monsters'
       dl_url: 'https://www.moddb.com/mods/afraid-of-monsters/downloads/afraid-of-monsters-v1'
+      dl_method: moddb
+      dl_sha256sum: 748117cdb7ff4b41d1681f952613e2d8822a9406363bd74ee6c3e41a0ffd632d
+      unpack_method: cicdec
 - branch: aomdc
   games:
     - title: "Afraid of Monsters: Director's Cut"
+      dir: [AoMDC]
       url: 'https://www.moddb.com/mods/afraid-of-monsters-dc'
       dl_url: 'https://www.moddb.com/mods/afraid-of-monsters-dc/downloads/afraid-of-monsters-directors-cut'
+      dl_method: moddb
+      dl_sha256sum: a6065e1bd31dd60a83a8d1ebf6eb7d6d27d7bb6dd36e3500f029b2ec47b96f3e
+      # NSIS, can be handled by 7z, payload root is the gamedir content (skip $PLUGINSDIR, uninstaomdc.exe)
+      unpack_method: 7z
+      unpack_to: AoMDC
 - branch: asheep
   games:
     - title: 'Azure Sheep'
       url: 'https://www.moddb.com/mods/azure-sheep'
       dl_url: 'https://www.moddb.com/mods/azure-sheep/downloads/azure-sheep-10'
+      dl_method: moddb
+      dl_sha256sum: badfb885fafc61cc12ce7200077e2edb6bd41b2e853365f539073e501fb02b46
+      unpack_method: cicdec
 - branch: biglolly
   games:
     - title: 'Big Lolly'
+      dir: [biglolly]
       url: 'https://www.moddb.com/mods/big-lolly'
       dl_url: 'https://www.moddb.com/mods/big-lolly/downloads/big-lolly'
+      dl_method: moddb
+      dl_sha256sum: 4d89cc228b6de7c7a3ec4be803c644a4acacdd49e5347e1cde3da50bc623ae4f
+      unpack_method: unrar
 - branch: blackops
   games:
     - title: 'Black Ops'
+      dir: [blackops]
       url: 'https://www.moddb.com/mods/black-ops'
       dl_url: 'https://www.moddb.com/mods/black-ops/downloads/black-ops-16'
+      dl_method: moddb
+      dl_sha256sum: 277c228b56d2d82475b9f31948f8eded3735dfd1f0cd38c3e26452ecc373ca2c
+      unpack_method: unzip
 
 # those two are mods for Half-Life, and install into the same directory
 # our scripts are quite stupid for case like this yet, so rename the resulting zip
@@ -64,17 +96,24 @@
   dl_name: bot10
   games:
     - title: "botman's Bot #10"
-      # bots-united.com is dead, only the archived page survives; it is both home and download page
+      dir: [bot]
+      # apparently, hp-bot.bots-united.com is now dead. Bless the web archive...
       url: 'https://web.archive.org/web/20250108095555/http://hpb-bot.bots-united.com/bot10.html'
-      dl_url: 'https://web.archive.org/web/20250108095555/http://hpb-bot.bots-united.com/bot10.html'
+      dl_url: 'https://web.archive.org/web/20240910094736/http://hpb-bot.bots-united.com/releases/bot10.exe'
+      dl_method: get_with_redirect
+      dl_sha256sum: a45eaadd77e645fcdede5b0990b7c0b626df182c82c3adc3ed2e5ef8fa7c367c
+      unpack_method: 7z # WinZip SFX
 - branch: bubblemod
   dl_name: bubblemod
   games:
     - title: 'BubbleMod'
       # official site is HTTP-only, the HTTPS certificate belongs to another domain;
-      # its live downloads page is broken (PHP errors), so link the archived one
+      # its live downloads page is broken (PHP errors), so download from the web archive
       url: 'http://www.bubblemod.org/'
-      dl_url: 'https://web.archive.org/web/20101013133134/http://www.bubblemod.org/dl_default.php'
+      dl_url: 'https://web.archive.org/web/20101013133134/http://www.bubblemod.org/agent.php?file=BubbleMod_2.2.3b.zip'
+      dl_method: get_with_redirect
+      dl_sha256sum: a1466c7d663a148f4bb391e62e96d891daa07d04cdf27573e6e26ff16b3a9696
+      # overlay mod installation is not decided yet, bubblemod installs on top of valve for example
 
 # HL Fixed branch
 - branch: hlfixed
@@ -82,54 +121,89 @@
   games:
     - title: 'HL Fixed'
       url: 'https://github.com/FWGS/hlsdk-portable/wiki/HL-Fixed'
+      dl_method: none
 - branch: opforfixed
   dl_name: opforfixed
   games:
     - title: 'Opposing Force Fixed'
       url: 'https://github.com/FWGS/hlsdk-portable/wiki/HL-Fixed'
+      dl_method: none
 
 - branch: caseclosed
   games:
     - title: 'Half-Life: Case Closed'
+      dir: [caseclosed]
       url: 'https://www.moddb.com/mods/caseclosed'
       dl_url: 'https://www.moddb.com/mods/caseclosed/downloads/case-closed'
+      dl_method: moddb
+      dl_sha256sum: 951e264a9cfa8d38342473989487474891b883758a5ef7d1372588e6c8c8c0d6
+      unpack_method: unzip
+      unpack_to: caseclosed
 - branch: CAd
   games:
     - title: "Cleaner's Adventures"
+      dir: [CAd]
       url: 'https://www.moddb.com/mods/cleaners-adventures'
       dl_url: 'https://www.moddb.com/mods/cleaners-adventures/downloads/cleaners-adventures-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 80afd19120f2aad29924461e7df57cfb8180993accf234e0960f88af2e1585cb
+      unpack_method: unzip
 - branch: clcampaign
   games:
     - title: 'Crack-Life: Campaign Mode'
+      dir: [clcampaign]
       url: 'https://www.moddb.com/mods/crack-life'
       dl_url: 'https://www.moddb.com/mods/crack-life/downloads/crack-life-campaign-mode'
+      dl_method: moddb
+      dl_sha256sum: 45e98e2c67407b9bc35f12e282f0568f27bfbfa04cfd895b3a123fb5d5d7b474
+      unpack_method: unrar
 - branch: counter-life
   games:
     - title: 'Counter-Life'
+      dir: [Counter-Life]
       url: 'https://www.moddb.com/mods/counter-life'
       dl_url: 'https://www.moddb.com/mods/counter-life/downloads/counter-life-version-1'
+      dl_method: moddb
+      dl_sha256sum: ec9a01cde67b8f9822bbeaf6723c9659076ff18b6c42edbf9a3570d24ef438d9
+      unpack_method: unzip
 - branch: cracklife
   games:
     - title: 'Crack-Life'
+      dir: [cracklife]
       url: 'https://www.moddb.com/mods/crack-life'
       dl_url: 'https://www.moddb.com/mods/crack-life/downloads/crack-life'
+      dl_method: moddb
+      dl_sha256sum: fab0bc542c40409429eee4853d05539da156b2631e48bb5895199be6221926bf
+      unpack_method: unrar
 - branch: decay-pc
   games:
     - title: 'Half-Life: Decay'
+      dir: [decay]
       url: 'https://www.moddb.com/mods/half-life-decay'
       dl_url: 'https://www.moddb.com/mods/half-life-decay/downloads/half-life-decay'
+      dl_method: moddb
+      dl_sha256sum: 261928983e737b533662e6bfa77a4dbc094f510431a55da0b60a6228eeb1923e
+      unpack_method: innoextract
+      unpack_root: app
+      unpack_to: decay
 - branch: delta_particles
   games:
     - title: 'DELTA PARTICLES'
+      dir: [delta_particles]
       url: 'https://www.moddb.com/mods/half-life-delta'
       dl_url: 'https://www.moddb.com/mods/half-life-delta/downloads/delta-particles-full-version'
+      dl_method: moddb
+      dl_sha256sum: 06d19b699ae62d1dba524ae9c15b4412691138d648f8bfc018ac25a2b7035a50
+      unpack_method: unzip
       steam:
         app_id: 1707900
         depot_ids: [1707901]
 - branch: dmc
   games:
     - title: 'Deathmatch Classic'
+      dir: [dmc]
       url: 'https://store.steampowered.com/app/40/Deathmatch_Classic/'
+      dl_method: steam
       # unlike OpFor/Blue Shift, app 40 doesn't mount depot 96; 41 is the sole DMC content depot
       steam:
         app_id: 40
@@ -137,108 +211,190 @@
 - branch: echoes
   games:
     - title: 'Half-Life: Echoes'
+      dir: [echoes]
       url: 'https://www.moddb.com/mods/half-life-echoes'
       dl_url: 'https://www.moddb.com/mods/half-life-echoes/downloads/half-life-echoes-v14'
+      dl_method: moddb
+      dl_sha256sum: ea703e55d7bcaabd75ef69efba754aba213b7dd2ea08436e9588a3885dd07459
+      unpack_method: unzip
 - branch: eftd
   games:
     - title: 'Escape from the Darkness'
+      dir: [eftd]
       url: 'https://www.moddb.com/mods/escape-from-the-darkness'
       dl_url: 'https://www.moddb.com/mods/escape-from-the-darkness/downloads/escape-from-the-darkness-10-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 61c1bfa8d2db1e13d93632f701c61271387c0a5bb55c75dfc17617faee61d66e
+      unpack_method: unzip
 
 # induction_1.2 is superseded by the halflife-featureful induction branch
 - branch: induction_1.2
   dl_name: induction_1.2
   games:
     - title: 'Half-Life: Induction'
+      dir: [induction]
       url: 'https://www.moddb.com/mods/half-life-induction'
       # the 1.2-era file matching this branch; 1.4 is built from the featureful induction branch
       dl_url: 'https://www.moddb.com/mods/half-life-induction/downloads/half-life-induction-12'
+      dl_method: moddb
+      dl_sha256sum: 797c36f08e629d8d805336075d9261c5dc7eb0821619cc7f9b9bca266b721f21
+      unpack_method: unrar
 
 - branch: insecure
   games:
     - title: 'Half-Life: Insecure'
+      dir: [insecure]
       url: 'https://www.moddb.com/mods/half-life-insecure'
       dl_url: 'https://www.moddb.com/mods/half-life-insecure/downloads/half-life-insecure-version-15'
+      dl_method: moddb
+      dl_sha256sum: 8ddc61283ac48a8fab8e03ce7247718e8bcbf320f192ab6788a06df8015db249
+      unpack_method: unzip
 - branch: half-secret
   games:
     - title: 'Half-Secret'
+      dir: [secret]
       url: 'https://www.moddb.com/mods/half-secret'
       dl_url: 'https://www.moddb.com/mods/half-secret/downloads/half-secret'
+      dl_method: moddb
+      dl_sha256sum: fc184ef7cf333c6dfa4edce93cd74ee61fd02d01c208af4d1ada7fb6e626d2a1
+      unpack_method: unrar
 - branch: half-screwed
   games:
     - title: 'Half-Screwed'
+      dir: [half-screwed]
       url: 'https://www.moddb.com/mods/half-screwed'
       dl_url: 'https://www.moddb.com/mods/half-screwed/downloads/half-screwed-death-and-rebirth'
+      dl_method: moddb
+      dl_sha256sum: cb107323f332494bd79a73a2f7e612c93eb7e5d8dc46137c14a1fe88caf326c8
+      unpack_method: unzip
 - branch: halloween
   games:
     - title: 'Half-Life Halloween Mod'
+      dir: [shall]
       url: 'https://www.moddb.com/mods/half-life-halloween-mod'
       dl_url: 'https://www.moddb.com/mods/half-life-halloween-mod/downloads/swiss-cheese-halloween-version-201'
+      dl_method: moddb
+      dl_sha256sum: 69d2b72e1780fc0711fabc8eebf94714693e9474af9f89bcd3999e94ac5ba7fa
+      unpack_method: unzip
+      # the gamedir is shall (Swiss_Cheese HALLoween), matching the built libraries
+      unpack_to: shall
 - branch: hltopdown
   games:
     - title: 'Half-Life: Top-Down'
+      dir: [HLTopDown]
       url: 'https://www.moddb.com/mods/half-life-top-down'
       dl_url: 'https://www.moddb.com/mods/half-life-top-down/downloads/half-life-top-down-version-2'
+      dl_method: moddb
+      dl_sha256sum: 24e758fc48082f22ec6be8700c4abee1b959eda2c92cbe7439b879050956d55b
+      unpack_method: unzip
 - branch: hl_urbicide
   games:
     - title: 'Half-Life: Urbicide'
+      dir: [hl_urbicide]
       url: 'https://www.moddb.com/mods/half-life-urbicide'
       dl_url: 'https://www.moddb.com/mods/half-life-urbicide/downloads/half-life-urbicide'
+      dl_method: moddb
+      dl_sha256sum: 4c1c1685bdcf2d0878e6ac699088eb957b91f2ccce86b0216185af92cd21d017
+      unpack_method: unzip
 - branch: noffice
   games:
     - title: 'Night at the Office'
       url: 'https://www.moddb.com/mods/night-at-the-office'
       dl_url: 'https://www.moddb.com/mods/night-at-the-office/downloads/night-at-the-office-v13'
+      dl_method: moddb
+      dl_sha256sum: 8c86ba493b9263704013068c732f454fd1ddc1e1d90640010ad5f1dd39fa1a56
+      unpack_method: cicdec
 - branch: poke646
   games:
     - title: 'Poke646'
+      dir: [poke646]
       # the official site's downloads page links to ModDB file pages anyway
       url: 'https://www.poke646.com/'
       dl_url: 'https://www.moddb.com/mods/poke646/downloads/poke646-v10'
+      dl_method: moddb
+      dl_sha256sum: aaf55a738117f14c9ab84d2e3b3184fdac4a21b16c99bf99e4d421ff9f573d87
+      # SFX with two concatenated zips: the payload zip (poke646/ gamedir at its
+      # root) starts at byte offset 367407, the first zip is installer decor
+      unpack_method: sfx_factory
 - branch: poke646_vendetta
   games:
     - title: 'Poke646: Vendetta'
+      # layout inside the ACE archive is unverified, but the gamedir is vendetta
+      dir: [vendetta]
       url: 'https://www.poke646.com/'
       dl_url: 'https://www.moddb.com/mods/poke646-vendetta/downloads/poke646-vendetta'
+      dl_method: moddb
+      dl_sha256sum: 723fdcb8be2dd95ef82a1ebf68fdc04771fcca3327bf1e90bd6855185c87b726
+      # SFX-Factory ACE self-extractor (**ACE** signature at byte offset 411680)
+      unpack_method: sfx_factory
 - branch: ps2hl
   build_system: cmake
   games:
     - title: 'Yet another PS2 Half-Life PC port'
+      dir: [ps2hl]
       url: 'https://www.moddb.com/mods/yet-another-ps2-half-life-pc-port'
       # v1.0 full release; a v1.1 patch exists on the same downloads listing
       dl_url: 'https://www.moddb.com/mods/yet-another-ps2-half-life-pc-port/downloads/yet-another-ps2-half-life-port-v10'
+      dl_method: moddb
+      dl_sha256sum: 33ce22a0814a69cb51ae165be9be3bf90570970519d2e73227528c59cf3afe9f
+      unpack_method: unzip
 - branch: rebellion
   games:
     - title: 'Rebellion'
+      dir: [rebellion, rebellion_french]
       url: 'https://www.moddb.com/mods/rebellion1'
       dl_url: 'https://www.moddb.com/mods/rebellion1/downloads/rebellion-10-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 732c30e9741a6d58dd76d8e5bf0b3f5e50d1d415d28dfef46e82d54e7c9f2c4f
+      unpack_method: unzip
 - branch: residual_point
   games:
     - title: 'Half-Life: Residual Point'
+      dir: [rp_pub]
       url: 'https://www.moddb.com/mods/hl-residual-point'
       dl_url: 'https://www.moddb.com/mods/hl-residual-point/downloads/rp-v1-pub-final1'
+      dl_method: moddb
+      dl_sha256sum: 80eaba8d0bde233b34fb730c8e52fa46c18953aa2ca7a05db71b0fec1d95cee6
+      unpack_method: unzip
+      # the archive wraps the content in a release-named dir, but the gamedir
+      # (per the built libraries) is rp_pub
+      unpack_root: rp_v1_pub_final1
+      unpack_to: rp_pub
 - branch: redempt
   games:
     - title: 'Absolute Redemption'
+      dir: [redempt]
       url: 'https://www.moddb.com/mods/absolute-redemption'
       dl_url: 'https://www.moddb.com/mods/absolute-redemption/downloads/absolute-redemption-mod-version'
+      dl_method: moddb
+      dl_sha256sum: 7a686a95ab2aaf430967aab542cb39f09306dd12d35847e7abe590cc20df79b4
+      unpack_method: unzip
 - branch: sci
   games:
     - title: 'Half-Life: The Quest mod'
-      # no dl_url: download links in the thread are dead (rghost is defunct), no known mirror
+      # download links in the thread are dead, no known mirror
+      # IS THIS A CERTIFIED LOST MEDIA MOMENT????
       url: 'https://csm.dev/threads/half-life-the-quest-mod-isxodniki.38030/'
+      dl_method: none
 - branch: sewer_beta
   games:
     - title: 'Sewer'
+      dir: [sewer_beta]
       # the addon page itself carries the download button
       url: 'https://www.moddb.com/games/half-life/addons/sewer-beta'
       dl_url: 'https://www.moddb.com/games/half-life/addons/sewer-beta'
+      dl_method: moddb
+      dl_sha256sum: caf086233ba3ca81f4a86fe12d78fb408914bf8f71817e2938aa9cae1cea52ca
+      unpack_method: unzip
 - branch: sohl1.2
   games:
     - title: 'Spirit of Half-Life'
+      dir: [Spirit]
       url: 'https://www.moddb.com/mods/spirit-of-half-life'
-      # the v1.2 file specifically, matching the branch; newer SDK versions exist on the listing
-      dl_url: 'https://www.moddb.com/mods/spirit-of-half-life/downloads/sohl-v12-with-source-code'
+      dl_url: 'https://www.moddb.com/mods/spirit-of-half-life/downloads/spirit-of-half-life-12-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 5a393894e8b901bd6b28fbbe892a335af117dfbe7c629d871fc0368b10da3693
+      unpack_method: unzip
 
 # Xen Warrior
 - branch: sohl1.2
@@ -247,34 +403,59 @@
   build_system: cmake
   games:
     - title: 'Half-Life: Xen-Warrior'
+      # the archive also carries decay/, bshift_unlocked/ and a gearbox/ overlay
+      dir: [xenwar]
       url: 'https://www.moddb.com/mods/xen-warrior'
       dl_url: 'https://www.moddb.com/mods/xen-warrior/downloads/xen-warrior'
+      dl_method: moddb
+      dl_sha256sum: 21443963981bd6ff55826fa29f5bb485c7dd410868b3795646930f107a41619e
+      unpack_method: unzip
 
 - branch: visitors
   games:
     - title: 'Half-Life: Visitors'
+      dir: [visitors]
       url: 'http://www.halflife-visitors.de/'
-      dl_url: 'http://www.halflife-visitors.de/en/files.htm'
+      dl_url: 'https://www.moddb.com/mods/half-life-visitors/downloads/half-life-visitors-crossplatformwonsteam'
+      dl_method: moddb
+      dl_sha256sum: 2fe3f3c3e81ac13a7f72a38055553bddd1940796c1be0e60ccaf875df309f9c0
+      unpack_method: unzip
 - branch: thegate
   games:
     - title: 'The Gate'
+      dir: [TheGate]
       url: 'https://www.moddb.com/mods/the-gate'
       dl_url: 'https://www.moddb.com/mods/the-gate/downloads/half-life-the-gate-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 3eb062629dc2411167ab1ef44d9e8e15770f46bcbebf420599a7576c70f5fc68
+      unpack_method: unzip
 - branch: theyhunger
   games:
     - title: 'They Hunger'
+      dir: [Hunger]
       url: 'https://www.moddb.com/mods/they-hunger'
       dl_url: 'https://www.moddb.com/mods/they-hunger/downloads/they-hunger-trilogy-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 65981b34d0ae15c6beb2da9bd1754458005aa714ccf6748cde2fc94068b81641
+      unpack_method: unzip
 - branch: tot
   games:
     - title: 'Times of Troubles'
+      dir: [tot]
       url: 'https://www.moddb.com/mods/times-of-troubles'
       dl_url: 'https://www.moddb.com/mods/times-of-troubles/downloads/times-of-troubles-12-crossplatform'
+      dl_method: moddb
+      dl_sha256sum: 23282f7f59020ea05edc932ddf80bed27f5620d5a68ccde426ad0491dbc3c678
+      unpack_method: unzip
 - branch: zombie-x
   games:
     - title: 'Zombie-X'
+      dir: [Zombie-X-DLE]
       url: 'https://www.moddb.com/mods/zombie-x-10-final'
       dl_url: 'https://www.moddb.com/mods/zombie-x-10-final/downloads/zombie-x-10-dle-beta6-last-version'
+      dl_method: moddb
+      dl_sha256sum: 63401238992e8e75598080a0f27cd6b6624b264cd7ec9032c60338e753b57556
+      unpack_method: unzip
 
 # Mods based on FreeSlave's Featureful SDK. Upstream only maintains CMake.
 - branch: featureful
@@ -283,7 +464,9 @@
   games:
     - title: 'Half-Life Featureful SDK'
       url: 'https://github.com/FreeSlave/halflife-featureful'
+      # undecided what to do with rolling release mods yet, can't pin a hash here
       dl_url: 'https://github.com/FreeSlave/halflife-featureful/releases'
+      dl_method: none
 - branch: induction
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
@@ -291,30 +474,47 @@
   configure_opts: -DCMAKE_POLICY_VERSION_MINIMUM=3.5
   games:
     - title: 'Half-Life: Induction'
+      dir: [induction]
       url: 'https://www.moddb.com/mods/half-life-induction'
       dl_url: 'https://www.moddb.com/mods/half-life-induction/downloads/half-life-induction-1-4'
+      dl_method: moddb
+      dl_sha256sum: c72f34993105c44121eaf0fb00514f7ac160da6b6f2d7c88e00be0d14007de5e
+      unpack_method: unzip
 - branch: intense_force
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
   games:
     - title: 'Intense Force'
+      dir: [intense_force]
       # the addon page itself carries the download button
       url: 'https://www.moddb.com/addons/intense-force'
       dl_url: 'https://www.moddb.com/addons/intense-force'
+      dl_method: moddb
+      dl_sha256sum: d2beabf09b075d8b0caa9a2d109dbe9d3599bf0e1f085bab8d5973c79f26a5e0
+      unpack_method: unzip
 - branch: field_intensity_1.7
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
   games:
     - title: 'Half-Life: Field Intensity'
+      # field_intensity_hd/ holds optional HD content
+      dir: [field_intensity, field_intensity_hd]
       url: 'https://www.moddb.com/mods/field-intensity'
       dl_url: 'https://www.moddb.com/mods/field-intensity/downloads/field-intensity-1-7'
+      dl_method: moddb
+      dl_sha256sum: 6dc6f119dd2dfd22575b1bd09d8d085e2b66d424ff9511a55432769536831ce0
+      unpack_method: unzip
 - branch: sum
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
   games:
     - title: 'Half-Life: Sum'
+      dir: [sum]
       url: 'https://www.moddb.com/mods/half-life-sum'
       dl_url: 'https://www.moddb.com/mods/half-life-sum/downloads/half-life-sum'
+      dl_method: moddb
+      dl_sha256sum: 7f3118fb12e0e18dbe1705858c26b6db30c2a5263acafb4755dfad29e79a3dd1
+      unpack_method: unzip
 
 # Mod by GT-Project Сat Team
 - branch: fwgs
@@ -323,5 +523,12 @@
   build_system: cmake
   games:
     - title: 'The Last Bullet: Updated'
+      dir: [TLBUE]
       url: 'https://www.moddb.com/mods/the-last-bullet-update'
       dl_url: 'https://www.moddb.com/mods/the-last-bullet-update/downloads/the-last-bullet1'
+      dl_method: moddb
+      dl_sha256sum: aff29bf5d361d25fe7546848f6b6d547751098493bfca26bc6a8801d49b4aba6
+      # the rar bundles a whole xash3d-fwgs engine install; the TLBUE/ gamedir folder
+      # sits inside TLBUE/xash/
+      unpack_method: unrar
+      unpack_root: TLBUE/xash

@@ -52,6 +52,41 @@ gamedirs = {gd for gd, _ in gitinfo}
 if not gamedirs:
     warn('no gitinfo-*.json sidecars found in out/')
 
+def load_games(mod_keys, builds_source):
+    # Attach the games[] content metadata from manifest.yml to each mod. The
+    # manifest is keyed by gamedir (dl_name when set, GAMEDIR otherwise), while
+    # manifest.yml is keyed by branch, so match on dl_name first and fall back
+    # to the source branch recorded in the gitinfo sidecars.
+    #
+    import yaml
+    entries = yaml.safe_load(Path('manifest.yml').read_text())
+
+    by_dl_name = {}
+    by_branch = {}
+    for entry in entries:
+        games = entry.get('games')
+        if not games:
+            continue
+        if 'dl_name' in entry:
+            by_dl_name[entry['dl_name']] = games
+        else:
+            by_branch.setdefault(entry['branch'], games)
+
+    result = {}
+    for key in mod_keys:
+        if key in by_dl_name:
+            result[key] = by_dl_name[key]
+            continue
+        # no dl_name: the key is the GAMEDIR; match by the build's source branch
+        branches = {b for b in builds_source.get(key, ()) if b in by_branch}
+        if len(branches) == 1:
+            result[key] = by_branch[next(iter(branches))]
+        elif not branches:
+            warn(f'no games metadata matched mod {key!r}')
+        else:
+            warn(f'ambiguous games metadata for mod {key!r}: branches {branches}')
+    return result
+
 # Now walk the zips and bucket them under their gamedir. We use the same
 # longest-prefix trick to recover the gamedir boundary from the filename.
 mods = {gd: {'builds': {}} for gd in gamedirs}
@@ -77,6 +112,16 @@ for zip_path in sorted(OUT.glob('*.zip')):
         'sha256': sha256(zip_path),
         'source': source,
     }
+
+# gamedir -> set of source branches its builds were made from, for matching
+# manifest.yml entries that have no dl_name
+builds_source = {
+    gd: {(b.get('source') or {}).get('branch')
+         for b in mod['builds'].values()}
+    for gd, mod in mods.items()
+}
+for gamedir, games in load_games(mods.keys(), builds_source).items():
+    mods[gamedir]['games'] = games
 
 server = os.environ.get('GITHUB_SERVER_URL', 'https://github.com')
 repo = os.environ.get('GITHUB_REPOSITORY', '')

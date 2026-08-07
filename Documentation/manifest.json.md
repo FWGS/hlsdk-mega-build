@@ -1,9 +1,12 @@
 # `manifest.json` schema
 
 Each release on this repository ships a `manifest.json` asset alongside the per-mod
-ZIP archives. The manifest describes every binary in the release: which gamedir it
-is for, which platform it targets, which upstream commit it was built from, and a
-sha256 checksum for verification.
+ZIP archives. It is produced by `scripts/gha/generate_manifest.py`, which walks the
+built ZIPs in `out/` and merges in the `games` content metadata from `manifest.yml`.
+The manifest describes every binary in the release: which gamedir it is for, which
+platform it targets, which upstream commit it was built from, and a sha256 checksum
+for verification; and, per mod, where to download the game content itself and how to
+unpack it (the `games` array).
 
 This document is the contract for downstream consumers (launchers, installers,
 update tools). The format is versioned: only **incompatible** changes bump
@@ -60,6 +63,20 @@ documented separately — consumers must ignore unknown fields, not reject them.
 | `...source.tree`                   | string  | required | never       | Upstream tree hash (`HEAD^{tree}`). Useful for content-addressed comparison across branches. |
 | `...source.url`                    | string  | required | never       | Upstream remote URL (typically `https://github.com/FWGS/hlsdk-portable`). |
 | `...source.patched`                | boolean | optional | never       | `true` if `hlsdk-mega-build` patches were applied on top of the upstream commit — `tree` then refers to the unpatched upstream tree. Absent or `false` means a pristine upstream build. |
+| `mods.<gamedir>.games`             | array   | optional | never       | Game **content** metadata carried over from `manifest.yml`, one object per game. Absent when the mod's `manifest.yml` entry carries no game metadata; the binaries in `builds` are then useless without content obtained by other means. |
+| `...games[].title`                 | string  | required | never       | Human readable title of the game. |
+| `...games[].dir`                   | array of strings | optional | never | Directories to install from the unpacked content archive, the first one being the gamedir. Anything else in the archive is ignored. Spelled exactly as in the archive. Absent when the content layout is unknown (e.g. installers no tool can unpack yet). |
+| `...games[].url`                   | string  | required | never       | Canonical home page of the game. |
+| `...games[].dl_url`                | string  | optional | never       | Download page or direct file link, depending on `dl_method`, of the latest version of the game. Absent when `dl_method` is `steam` or `none`. |
+| `...games[].dl_method`             | string  | required | never       | How to download `dl_url`: `moddb` (resolve the start/mirror indirection like `scripts/moddb-download.sh` does), `get` (plain HTTP GET), `get_with_redirect` (HTTP GET following redirects), `steam` (fetch via the `steam` object), `none` (nothing to download). Unknown values must be treated as "cannot download". |
+| `...games[].need_browser_ua`       | boolean | optional | never       | Enable if the server returns 403 unless a browser User-Agent is sent. Only meaningful for `get`/`get_with_redirect`, as `moddb` always implies it. Absent means `false`. |
+| `...games[].dl_sha256sum`          | string  | optional | never       | sha256 checksum of the downloaded file. Verify it before passing the file to an unpacker, and treat a mismatch as "upstream changed the release", not as a transfer error. |
+| `...games[].unpack_method`         | string  | optional | never       | Tool that unpacks the download: `unzip`, `unrar`, `7z`, `innoextract`, `unshield`, `cicdec` (Clickteam installer), `sfx_factory` (SFX-Factory installer, handled by `scripts/sfx-factory-extract.sh`). Unknown values must be treated as "cannot unpack". |
+| `...games[].unpack_root`           | string  | optional | never       | Path inside the archive the game content is taken from. Absent means the archive root. |
+| `...games[].unpack_to`             | string  | optional | never       | If present, the content at `unpack_root` is the gamedir content itself (the archive carries no gamedir folder) and must be installed into a directory with this name. If absent, `unpack_root` contains the gamedir folder(s) listed in `dir`. |
+| `...games[].steam`                 | object  | optional | never       | Present when the game is available from Steam. |
+| `...steam.app_id`                  | integer | required | never       | Steam AppID. |
+| `...steam.depot_ids`               | array of integers | required | never | **Content** depot IDs (binaries depots are excluded — the `builds` of this manifest replace them). |
 
 ### Platform key format
 
@@ -103,3 +120,11 @@ new field as an error.
 ## Changelog
 
 1. Initial version intended for public use.
+
+Unversioned additions (optional fields, no `version` bump):
+
+- `mods.<gamedir>.games` — game content download/unpack metadata carried over
+  from `manifest.yml` (see the field reference above), emitted by
+  `generate_manifest.py` for every mod whose `manifest.yml` entry has a `games`
+  block. Consumers must tolerate its absence, since a source entry need not
+  carry game metadata.

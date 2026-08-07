@@ -2,4 +2,4 @@ out/
 hlsdk-portable/
 install-man-page.sh
 yq*
-
+__pycache__

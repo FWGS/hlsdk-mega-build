@@ -5,6 +5,7 @@
   games:
     - title: 'Half-Life'
       dir: valve
+      url: 'https://store.steampowered.com/app/70/HalfLife/'
       steam:
         app_id: 70
         depot_ids: [1, 71, 96]
@@ -27,91 +28,300 @@
 # TODO: Add miniag
 
 - branch: aghl
+  games:
+    - title: 'Adrenaline Gamer'
+      url: 'https://www.moddb.com/mods/adrenaline-gamer'
+      dl_url: 'https://www.moddb.com/mods/adrenaline-gamer/downloads/adrenaline-gamer-v66'
 - branch: aom
+  games:
+    - title: 'Afraid of Monsters'
+      url: 'https://www.moddb.com/mods/afraid-of-monsters'
+      dl_url: 'https://www.moddb.com/mods/afraid-of-monsters/downloads/afraid-of-monsters-v1'
 - branch: aomdc
+  games:
+    - title: "Afraid of Monsters: Director's Cut"
+      url: 'https://www.moddb.com/mods/afraid-of-monsters-dc'
+      dl_url: 'https://www.moddb.com/mods/afraid-of-monsters-dc/downloads/afraid-of-monsters-directors-cut'
 - branch: asheep
+  games:
+    - title: 'Azure Sheep'
+      url: 'https://www.moddb.com/mods/azure-sheep'
+      dl_url: 'https://www.moddb.com/mods/azure-sheep/downloads/azure-sheep-10'
 - branch: biglolly
+  games:
+    - title: 'Big Lolly'
+      url: 'https://www.moddb.com/mods/big-lolly'
+      dl_url: 'https://www.moddb.com/mods/big-lolly/downloads/big-lolly'
 - branch: blackops
+  games:
+    - title: 'Black Ops'
+      url: 'https://www.moddb.com/mods/black-ops'
+      dl_url: 'https://www.moddb.com/mods/black-ops/downloads/black-ops-16'
 
 # those two are mods for Half-Life, and install into the same directory
 # our scripts are quite stupid for case like this yet, so rename the resulting zip
 - branch: bot10
   dl_name: bot10
+  games:
+    - title: "botman's Bot #10"
+      # bots-united.com is dead, only the archived page survives; it is both home and download page
+      url: 'https://web.archive.org/web/20250108095555/http://hpb-bot.bots-united.com/bot10.html'
+      dl_url: 'https://web.archive.org/web/20250108095555/http://hpb-bot.bots-united.com/bot10.html'
 - branch: bubblemod
   dl_name: bubblemod
+  games:
+    - title: 'BubbleMod'
+      # official site is HTTP-only, the HTTPS certificate belongs to another domain;
+      # its live downloads page is broken (PHP errors), so link the archived one
+      url: 'http://www.bubblemod.org/'
+      dl_url: 'https://web.archive.org/web/20101013133134/http://www.bubblemod.org/dl_default.php'
 
 # HL Fixed branch
 - branch: hlfixed
   dl_name: hlfixed
+  games:
+    - title: 'HL Fixed'
+      url: 'https://github.com/FWGS/hlsdk-portable/wiki/HL-Fixed'
 - branch: opforfixed
   dl_name: opforfixed
+  games:
+    - title: 'Opposing Force Fixed'
+      url: 'https://github.com/FWGS/hlsdk-portable/wiki/HL-Fixed'
 
 - branch: caseclosed
+  games:
+    - title: 'Half-Life: Case Closed'
+      url: 'https://www.moddb.com/mods/caseclosed'
+      dl_url: 'https://www.moddb.com/mods/caseclosed/downloads/case-closed'
 - branch: CAd
+  games:
+    - title: "Cleaner's Adventures"
+      url: 'https://www.moddb.com/mods/cleaners-adventures'
+      dl_url: 'https://www.moddb.com/mods/cleaners-adventures/downloads/cleaners-adventures-crossplatform'
 - branch: clcampaign
+  games:
+    - title: 'Crack-Life: Campaign Mode'
+      url: 'https://www.moddb.com/mods/crack-life'
+      dl_url: 'https://www.moddb.com/mods/crack-life/downloads/crack-life-campaign-mode'
 - branch: counter-life
+  games:
+    - title: 'Counter-Life'
+      url: 'https://www.moddb.com/mods/counter-life'
+      dl_url: 'https://www.moddb.com/mods/counter-life/downloads/counter-life-version-1'
 - branch: cracklife
+  games:
+    - title: 'Crack-Life'
+      url: 'https://www.moddb.com/mods/crack-life'
+      dl_url: 'https://www.moddb.com/mods/crack-life/downloads/crack-life'
 - branch: decay-pc
+  games:
+    - title: 'Half-Life: Decay'
+      url: 'https://www.moddb.com/mods/half-life-decay'
+      dl_url: 'https://www.moddb.com/mods/half-life-decay/downloads/half-life-decay'
 - branch: delta_particles
+  games:
+    - title: 'DELTA PARTICLES'
+      url: 'https://www.moddb.com/mods/half-life-delta'
+      dl_url: 'https://www.moddb.com/mods/half-life-delta/downloads/delta-particles-full-version'
+      steam:
+        app_id: 1707900
+        depot_ids: [1707901]
 - branch: dmc
+  games:
+    - title: 'Deathmatch Classic'
+      url: 'https://store.steampowered.com/app/40/Deathmatch_Classic/'
+      # unlike OpFor/Blue Shift, app 40 doesn't mount depot 96; 41 is the sole DMC content depot
+      steam:
+        app_id: 40
+        depot_ids: [1, 41]
 - branch: echoes
+  games:
+    - title: 'Half-Life: Echoes'
+      url: 'https://www.moddb.com/mods/half-life-echoes'
+      dl_url: 'https://www.moddb.com/mods/half-life-echoes/downloads/half-life-echoes-v14'
 - branch: eftd
+  games:
+    - title: 'Escape from the Darkness'
+      url: 'https://www.moddb.com/mods/escape-from-the-darkness'
+      dl_url: 'https://www.moddb.com/mods/escape-from-the-darkness/downloads/escape-from-the-darkness-10-crossplatform'
 
 # induction_1.2 is superseded by the halflife-featureful induction branch
 - branch: induction_1.2
   dl_name: induction_1.2
+  games:
+    - title: 'Half-Life: Induction'
+      url: 'https://www.moddb.com/mods/half-life-induction'
+      # the 1.2-era file matching this branch; 1.4 is built from the featureful induction branch
+      dl_url: 'https://www.moddb.com/mods/half-life-induction/downloads/half-life-induction-12'
 
 - branch: insecure
+  games:
+    - title: 'Half-Life: Insecure'
+      url: 'https://www.moddb.com/mods/half-life-insecure'
+      dl_url: 'https://www.moddb.com/mods/half-life-insecure/downloads/half-life-insecure-version-15'
 - branch: half-secret
+  games:
+    - title: 'Half-Secret'
+      url: 'https://www.moddb.com/mods/half-secret'
+      dl_url: 'https://www.moddb.com/mods/half-secret/downloads/half-secret'
 - branch: half-screwed
+  games:
+    - title: 'Half-Screwed'
+      url: 'https://www.moddb.com/mods/half-screwed'
+      dl_url: 'https://www.moddb.com/mods/half-screwed/downloads/half-screwed-death-and-rebirth'
 - branch: halloween
+  games:
+    - title: 'Half-Life Halloween Mod'
+      url: 'https://www.moddb.com/mods/half-life-halloween-mod'
+      dl_url: 'https://www.moddb.com/mods/half-life-halloween-mod/downloads/swiss-cheese-halloween-version-201'
 - branch: hltopdown
+  games:
+    - title: 'Half-Life: Top-Down'
+      url: 'https://www.moddb.com/mods/half-life-top-down'
+      dl_url: 'https://www.moddb.com/mods/half-life-top-down/downloads/half-life-top-down-version-2'
 - branch: hl_urbicide
+  games:
+    - title: 'Half-Life: Urbicide'
+      url: 'https://www.moddb.com/mods/half-life-urbicide'
+      dl_url: 'https://www.moddb.com/mods/half-life-urbicide/downloads/half-life-urbicide'
 - branch: noffice
+  games:
+    - title: 'Night at the Office'
+      url: 'https://www.moddb.com/mods/night-at-the-office'
+      dl_url: 'https://www.moddb.com/mods/night-at-the-office/downloads/night-at-the-office-v13'
 - branch: poke646
+  games:
+    - title: 'Poke646'
+      # the official site's downloads page links to ModDB file pages anyway
+      url: 'https://www.poke646.com/'
+      dl_url: 'https://www.moddb.com/mods/poke646/downloads/poke646-v10'
 - branch: poke646_vendetta
+  games:
+    - title: 'Poke646: Vendetta'
+      url: 'https://www.poke646.com/'
+      dl_url: 'https://www.moddb.com/mods/poke646-vendetta/downloads/poke646-vendetta'
 - branch: ps2hl
   build_system: cmake
+  games:
+    - title: 'Yet another PS2 Half-Life PC port'
+      url: 'https://www.moddb.com/mods/yet-another-ps2-half-life-pc-port'
+      # v1.0 full release; a v1.1 patch exists on the same downloads listing
+      dl_url: 'https://www.moddb.com/mods/yet-another-ps2-half-life-pc-port/downloads/yet-another-ps2-half-life-port-v10'
 - branch: rebellion
+  games:
+    - title: 'Rebellion'
+      url: 'https://www.moddb.com/mods/rebellion1'
+      dl_url: 'https://www.moddb.com/mods/rebellion1/downloads/rebellion-10-crossplatform'
 - branch: residual_point
+  games:
+    - title: 'Half-Life: Residual Point'
+      url: 'https://www.moddb.com/mods/hl-residual-point'
+      dl_url: 'https://www.moddb.com/mods/hl-residual-point/downloads/rp-v1-pub-final1'
 - branch: redempt
+  games:
+    - title: 'Absolute Redemption'
+      url: 'https://www.moddb.com/mods/absolute-redemption'
+      dl_url: 'https://www.moddb.com/mods/absolute-redemption/downloads/absolute-redemption-mod-version'
 - branch: sci
+  games:
+    - title: 'Half-Life: The Quest mod'
+      # no dl_url: download links in the thread are dead (rghost is defunct), no known mirror
+      url: 'https://csm.dev/threads/half-life-the-quest-mod-isxodniki.38030/'
 - branch: sewer_beta
+  games:
+    - title: 'Sewer'
+      # the addon page itself carries the download button
+      url: 'https://www.moddb.com/games/half-life/addons/sewer-beta'
+      dl_url: 'https://www.moddb.com/games/half-life/addons/sewer-beta'
 - branch: sohl1.2
+  games:
+    - title: 'Spirit of Half-Life'
+      url: 'https://www.moddb.com/mods/spirit-of-half-life'
+      # the v1.2 file specifically, matching the branch; newer SDK versions exist on the listing
+      dl_url: 'https://www.moddb.com/mods/spirit-of-half-life/downloads/sohl-v12-with-source-code'
 
 # Xen Warrior
 - branch: sohl1.2
   dl_name: xenwar
   configure_opts: -DXENWARRIOR=1
   build_system: cmake
+  games:
+    - title: 'Half-Life: Xen-Warrior'
+      url: 'https://www.moddb.com/mods/xen-warrior'
+      dl_url: 'https://www.moddb.com/mods/xen-warrior/downloads/xen-warrior'
 
 - branch: visitors
+  games:
+    - title: 'Half-Life: Visitors'
+      url: 'http://www.halflife-visitors.de/'
+      dl_url: 'http://www.halflife-visitors.de/en/files.htm'
 - branch: thegate
+  games:
+    - title: 'The Gate'
+      url: 'https://www.moddb.com/mods/the-gate'
+      dl_url: 'https://www.moddb.com/mods/the-gate/downloads/half-life-the-gate-crossplatform'
 - branch: theyhunger
+  games:
+    - title: 'They Hunger'
+      url: 'https://www.moddb.com/mods/they-hunger'
+      dl_url: 'https://www.moddb.com/mods/they-hunger/downloads/they-hunger-trilogy-crossplatform'
 - branch: tot
+  games:
+    - title: 'Times of Troubles'
+      url: 'https://www.moddb.com/mods/times-of-troubles'
+      dl_url: 'https://www.moddb.com/mods/times-of-troubles/downloads/times-of-troubles-12-crossplatform'
 - branch: zombie-x
+  games:
+    - title: 'Zombie-X'
+      url: 'https://www.moddb.com/mods/zombie-x-10-final'
+      dl_url: 'https://www.moddb.com/mods/zombie-x-10-final/downloads/zombie-x-10-dle-beta6-last-version'
 
 # Mods based on FreeSlave's Featureful SDK. Upstream only maintains CMake.
 - branch: featureful
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+  games:
+    - title: 'Half-Life Featureful SDK'
+      url: 'https://github.com/FreeSlave/halflife-featureful'
+      dl_url: 'https://github.com/FreeSlave/halflife-featureful/releases'
 - branch: induction
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
   # hack for cmake 4.x which doesn't like 2.8 minimum required
   configure_opts: -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+  games:
+    - title: 'Half-Life: Induction'
+      url: 'https://www.moddb.com/mods/half-life-induction'
+      dl_url: 'https://www.moddb.com/mods/half-life-induction/downloads/half-life-induction-1-4'
 - branch: intense_force
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+  games:
+    - title: 'Intense Force'
+      # the addon page itself carries the download button
+      url: 'https://www.moddb.com/addons/intense-force'
+      dl_url: 'https://www.moddb.com/addons/intense-force'
 - branch: field_intensity_1.7
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+  games:
+    - title: 'Half-Life: Field Intensity'
+      url: 'https://www.moddb.com/mods/field-intensity'
+      dl_url: 'https://www.moddb.com/mods/field-intensity/downloads/field-intensity-1-7'
 - branch: sum
   repo: https://github.com/FreeSlave/halflife-featureful
   build_system: cmake
+  games:
+    - title: 'Half-Life: Sum'
+      url: 'https://www.moddb.com/mods/half-life-sum'
+      dl_url: 'https://www.moddb.com/mods/half-life-sum/downloads/half-life-sum'
 
 # Mod by GT-Project Сat Team
 - branch: fwgs
   repo: https://github.com/GT-Project-Cat/The-Last-Bullet-Updated-Code
   dl_name: TLBUE
   build_system: cmake
+  games:
+    - title: 'The Last Bullet: Updated'
+      url: 'https://www.moddb.com/mods/the-last-bullet-update'
+      dl_url: 'https://www.moddb.com/mods/the-last-bullet-update/downloads/the-last-bullet1'

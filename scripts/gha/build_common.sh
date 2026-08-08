@@ -51,12 +51,6 @@ build_with_cmake()
 	local CMAKE_BUILD_CONFIG_OPTION=''
 	local CMAKE_CCACHE_OPTION=''
 
-	# ccache does not support MSVC and the Visual Studio generator ignores
-	# compiler launchers anyway
-	if command -v ccache > /dev/null 2>&1 && [ "$GH_CPU_OS" != "win32" ]; then
-		CMAKE_CCACHE_OPTION='-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache'
-	fi
-
 	# equivalent of waf's -8 flag: hlsdk CMakeLists append -m32 on x86_64
 	# hosts unless 64BIT is set. GoldSource only exists in 32-bit, so
 	# don't build the compatible client library on 64-bit
@@ -64,18 +58,23 @@ build_with_cmake()
 		CMAKE_64BIT_OPTION='-D64BIT=ON -DGOLDSOURCE_SUPPORT=OFF'
 	fi
 
-	if [ "$GH_CPU_OS" == "win32" ]; then
-		# cl.exe is not in PATH without vcvars, but the Visual Studio
-		# generator can locate MSVC by itself, unlike Ninja
+	# if cl.exe is not in PATH without vcvars, fall back to the Visual Studio generator that can locate MSVC by itself, unlike Ninja
+	if [ "$GH_CPU_OS" == "win32" ] && ! command -v cl > /dev/null 2>&1; then
 		CMAKE_GENERATOR_OPTION='-A x64'
-		CMAKE_BUILD_CONFIG_OPTION='--config Release'
+		CMAKE_BUILD_CONFIG_OPTION='--config RelWithDebInfo'
+	fi
+
+	# ccache supports MSVC since 4.6, but we should not use /Zi. VS generator don't support compiler launchers, so use Ninja
+	if command -v ccache > /dev/null 2>&1 && [ "$CMAKE_GENERATOR_OPTION" == "-GNinja" ]; then
+		CMAKE_CCACHE_OPTION='-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache'
 	fi
 
 	# remove CMake cache to start configuration from zero
 	rm -rf build/CMakeCache.txt
 
+	# RelWithDebInfo, matching waf's -T release: mods ship with debug info on purpose, so that crash reports remain useful
 	cmake -B build $CMAKE_GENERATOR_OPTION \
-		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 		-DCMAKE_INSTALL_PREFIX="../stage/$1" \
 		$CMAKE_CCACHE_OPTION \
 		$CMAKE_64BIT_OPTION \
@@ -127,14 +126,21 @@ build_hlsdk_branch()
 	# trees that only maintain waf gracefully fall back to it (like quakewrapper)
 	if [ "$2" == "cmake" ] || { [ "${USE_CMAKE:-0}" -eq 1 ] && [ -f CMakeLists.txt ]; }; then
 		build_with_cmake "$PACK_NAME" "$4"
+		SUCCESS=$?
+
+		# the platform merely prefers cmake here: a tree whose stale
+		# CMakeLists.txt fails may still build fine with waf
+		if [ "$SUCCESS" -ne 0 ] && [ "$2" == "waf" ]; then
+			build_with_waf "$PACK_NAME" "$4"
+			SUCCESS=$?
+		fi
 	elif [ "$2" == "waf" ]; then
 		build_with_waf "$PACK_NAME" "$4"
+		SUCCESS=$?
 	else
 		echo "error: unknown build_system '$2' for branch $1" >&2
 		return 1
 	fi
-
-	SUCCESS=$?
 
 	if [ "$SUCCESS" -eq 2 ]; then # means something went wrong during install phase
 		rm -rf "../stage/$PACK_NAME" # better cleanup

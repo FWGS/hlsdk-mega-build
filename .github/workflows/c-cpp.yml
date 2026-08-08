@@ -99,7 +99,6 @@ jobs:
       with:
         submodules: recursive
     - name: Restore ccache
-      if: matrix.targetos != 'win32'
       uses: actions/cache@v4
       with:
         path: .ccache
@@ -108,12 +107,18 @@ jobs:
           ccache-${{ matrix.targetos }}-${{ matrix.targetarch }}-
     - name: Install dependencies
       run: bash scripts/gha/${{ runner.environment }}/deps_${{ matrix.targetos }}.sh
+    - name: Set developer command prompt
+      # puts cl.exe into PATH so cmake can use Ninja and route it through
+      # ccache, see build_common.sh
+      if: matrix.targetos == 'win32'
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
     - name: Build HLSDK
       env:
         FWGS_PFX_PASSWORD: ${{ secrets.FWGS_PFX_PASSWORD }}
       run: bash scripts/gha/${{ runner.environment }}/build_${{ matrix.targetos }}.sh
     - name: Show ccache statistics
-      if: matrix.targetos != 'win32'
       run: ccache -s
     - name: Upload HLSDK (artifacts)
       uses: actions/upload-artifact@v4

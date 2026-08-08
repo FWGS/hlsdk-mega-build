@@ -9,5 +9,6 @@ docker run --rm \
 	-v "$GITHUB_WORKSPACE:$GITHUB_WORKSPACE" -w "$GITHUB_WORKSPACE" \
 	-e GH_CPU_OS -e GH_CPU_ARCH \
 	-e CCACHE_DIR -e CCACHE_MAXSIZE -e CCACHE_COMPILERCHECK -e CCACHE_SLOPPINESS \
+	-e CCACHE_COMPRESSLEVEL \
 	devkitpro/devkita64:latest \
 	bash scripts/gha/github-hosted/build_nswitch_docker.sh

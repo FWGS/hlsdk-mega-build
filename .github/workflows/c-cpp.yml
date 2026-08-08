@@ -93,6 +93,7 @@ jobs:
       # compiler check would invalidate the whole cache each time
       CCACHE_COMPILERCHECK: content
       CCACHE_SLOPPINESS: time_macros
+      CCACHE_COMPRESSLEVEL: 5 # we are hitting limits too fast...
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -191,6 +192,18 @@ jobs:
         gh release upload --clobber "$RELEASE_TAG" out/*-psvita-armv7hf.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip
+    - name: Evict superseded ccache generations
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # we are hitting limits too fast, so remove old entries we do not care about
+        gh cache list -R "$GITHUB_REPOSITORY" -L 200 --json id,key,ref,createdAt \
+          --jq '[.[] | select(.key | startswith("ccache-"))]
+                | group_by([(.key | sub("-[0-9]+$"; "")), .ref])
+                | map(sort_by(.createdAt) | reverse | .[1:]) | flatten | .[].id' |
+        while read -r ID; do
+          gh cache delete "$ID" -R "$GITHUB_REPOSITORY" || true
+        done
     - name: Publish build status page
       if: github.ref_name == 'master'
       env:

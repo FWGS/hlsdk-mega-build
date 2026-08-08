@@ -516,6 +516,15 @@
       dl_sha256sum: 7f3118fb12e0e18dbe1705858c26b6db30c2a5263acafb4755dfad29e79a3dd1
       unpack_method: unzip
 
+# QuakeC VM implemented as a Half-Life mod; waf also installs extras.pk3
+# into the gamedir, so it ships inside every library ZIP
+- branch: master
+  repo: https://github.com/FWGS/quakewrapper
+  games:
+    - title: 'Quake Wrapper'
+      url: 'https://github.com/FWGS/quakewrapper'
+      dl_method: none
+
 # Mod by GT-Project Сat Team
 - branch: fwgs
   repo: https://github.com/GT-Project-Cat/The-Last-Bullet-Updated-Code

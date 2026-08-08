@@ -16,6 +16,10 @@ build_with_waf()
 {
 	local WAF_ENABLE_VGUI_OPTION=''
 	local WAF_ENABLE_AMD64_OPTION=''
+	local WAF_ENABLE_MSVCDEPS_OPTION=''
+
+	# not all waf-based hlsdk trees define this option (e.g. quakewrapper)
+	python waf --help | grep 'enable-msvcdeps' && WAF_ENABLE_MSVCDEPS_OPTION=--enable-msvcdeps
 
 	if [ "$GH_CPU_ARCH" == "amd64" ]; then
 		WAF_ENABLE_AMD64_OPTION="-8"
@@ -27,7 +31,7 @@ build_with_waf()
 	python waf --jobs=$(( $(nproc) + 1 )) \
 		configure \
 			--disable-werror \
-			--enable-msvcdeps \
+			$WAF_ENABLE_MSVCDEPS_OPTION \
 			-T release \
 			$WAF_ENABLE_AMD64_OPTION \
 			$WAF_ENABLE_VGUI_OPTION \
@@ -120,7 +124,8 @@ build_hlsdk_branch()
 	PACK_NAME=${3:-$GAMEDIR}
 
 	# use cmake if requested by platform or by a mod tree
-	if [ "${USE_CMAKE:-0}" -eq 1 ] || [ "$2" == "cmake" ]; then
+	# trees that only maintain waf gracefully fall back to it (like quakewrapper)
+	if [ "$2" == "cmake" ] || { [ "${USE_CMAKE:-0}" -eq 1 ] && [ -f CMakeLists.txt ]; }; then
 		build_with_cmake "$PACK_NAME" "$4"
 	elif [ "$2" == "waf" ]; then
 		build_with_waf "$PACK_NAME" "$4"

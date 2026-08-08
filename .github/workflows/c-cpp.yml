@@ -73,7 +73,7 @@ jobs:
           #  targetos: apple
           #  targetarch: amd64
     env:
-      YQ_VERSION: 4.52.5
+      YQ_VERSION: 4.53.3
       GH_CPU_OS: ${{ matrix.targetos }}
       GH_CPU_ARCH: ${{ matrix.targetarch }}
       CCACHE_DIR: ${{ github.workspace }}/.ccache

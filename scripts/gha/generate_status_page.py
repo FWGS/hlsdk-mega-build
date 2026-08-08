@@ -65,14 +65,51 @@ def chip(mod, plat):
 		download_base, html.escape(build['filename']),
 		html.escape(build['filename']), label)
 
+def source_links(mod):
+	pairs = {(s.get('url'), s.get('branch'))
+			 for b in mods[mod].get('builds', {}).values()
+			 for s in [b.get('source') or {}] if s.get('url') and s.get('branch')}
+	links = []
+	for url, branch in sorted(pairs):
+		if url.endswith('.git'):
+			url = url[:-len('.git')]
+		label = 'source' if len(pairs) == 1 else 'source (%s)' % html.escape(branch)
+		links.append('<a href="%s/tree/%s" title="%s">%s</a>' % (
+			html.escape(url), html.escape(branch),
+			html.escape('%s @ %s' % (url, branch)), label))
+	return links
+
+def mod_meta(mod):
+	# canonical title linking to the game's home page, the content download
+	# link where the manifest carries one, and the mod source code
+	lines = []
+	for game in mods[mod].get('games') or []:
+		title = html.escape(game.get('title', mod))
+		url = game.get('url')
+		dl_url = game.get('dl_url')
+		line = '<a href="%s">%s</a>' % (html.escape(url), title) if url else title
+		if dl_url:
+			line += ' · <a href="%s">download</a>' % html.escape(dl_url)
+		lines.append(line)
+	srcs = source_links(mod)
+	if srcs:
+		if lines:
+			lines[0] += ' · ' + ' · '.join(srcs)
+		else:
+			lines.append(' · '.join(srcs))
+	if not lines:
+		return ''
+	return '<div class="modmeta">%s</div>' % '<br>'.join(lines)
+
 rows = []
 cards = []
 for mod in sorted(mods, key=str.lower):
+	meta = mod_meta(mod)
 	cells = ''.join(cell(mod, p) for p in platforms)
-	rows.append('<tr><th>%s</th>%s</tr>' % (html.escape(mod), cells))
+	rows.append('<tr><th>%s%s</th>%s</tr>' % (html.escape(mod), meta, cells))
 	chips = ''.join(chip(mod, p) for p in platforms)
-	cards.append('<li><h2>%s</h2><div class="chips">%s</div></li>'
-				 % (html.escape(mod), chips))
+	cards.append('<li><h2>%s</h2>%s<div class="chips">%s</div></li>'
+				 % (html.escape(mod), meta, chips))
 
 # group platform columns by OS for a two-level header
 os_groups = []
@@ -131,6 +168,9 @@ tbody th {{ text-align: left; font-weight: 500; padding: .3rem .6rem; white-spac
 		   position: sticky; left: 0; background: var(--bg); }}
 tbody tr:hover th {{ background: var(--row-hover); }}
 tbody tr:hover td {{ background: var(--row-hover); }}
+.modmeta {{ font-weight: 400; font-size: .78rem; color: var(--muted); margin-top: .1rem; }}
+.modmeta a {{ color: inherit; text-decoration: underline; text-underline-offset: 2px; }}
+.cards .modmeta {{ margin: -.25rem 0 .4rem; }}
 td.ok a {{ display: block; padding: .3rem .55rem; color: var(--ok); font-weight: 700;
 		  text-decoration: none; }}
 td.ok a:hover, td.ok a:focus-visible {{ background: var(--ok-hover-bg); text-decoration: underline;

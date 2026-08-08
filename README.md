@@ -44,7 +44,7 @@ The definition of mods is kept within `manifest.yml` file which is a YAML file c
 The client scripts shell out to external tools depending on the `dl_method`/`unpack_method` of the game being installed. Only the ones a given mod actually uses are needed.
 
 | Tool                    | Needed for |
-|-----------------------=-|-----------|
+|-------------------------|------------|
 |`python3` (3.6+)         |All scripts.|
 |`PyYAML` (python module) |`sample_mod_install.py`, until it reads the generated `manifest.json` instead of `manifest.yml`.|
 |`curl`                   |`moddb-download.sh` (i.e. every `moddb` download).|

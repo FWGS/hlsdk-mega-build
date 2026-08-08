@@ -21,7 +21,9 @@ regenerate_sources_list()
 	sudo rm /etc/apt/sources.list
 	sudo rm -rf /etc/apt/sources.list.d
 
-	for i in jammy jammy-updates jammy-backports jammy-security; do
+	codename=$(grep DISTRIB_CODENAME /etc/lsb-release | cut -d= -f2)
+
+	for i in "$codename" "$codename-updates" "$codename-backports" "$codename-security"; do
 		echo "deb [arch=$GH_CPU_ARCH] http://azure.ports.ubuntu.com/ubuntu-ports $i main universe" | sudo tee -a /etc/apt/sources.list
 		echo "deb [arch=amd64] http://azure.archive.ubuntu.com/ubuntu $i main universe" | sudo tee -a /etc/apt/sources.list
 	done

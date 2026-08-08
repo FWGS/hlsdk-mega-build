@@ -17,8 +17,9 @@ PAGE = Path('page')
 
 # canonical column order, platforms not listed here are appended at the end
 PLATFORM_ORDER = [
-	'linux-amd64', 'linux-i386', 'linux-arm64', 'linux-armhf',
+	'linux-amd64', 'linux-i386', 'linux-arm64', 'linux-armhf', 'linux-riscv64',
 	'android-amd64', 'android-i386', 'android-arm64', 'android-armv7l',
+	'nswitch-arm64', 'psvita-armv7hf',
 	'win32-amd64', 'apple-arm64',
 ]
 

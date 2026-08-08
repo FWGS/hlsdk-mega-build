@@ -35,6 +35,17 @@ jobs:
           - os: ubuntu-22.04-arm
             targetos: linux
             targetarch: armhf
+          - os: ubuntu-24.04 # riscv64 would benefit from having latest compilers
+            targetos: linux
+            targetarch: riscv64
+
+          # Game console systems
+          - os: ubuntu-latest
+            targetos: nswitch
+            targetarch: arm64
+          - os: ubuntu-latest
+            targetos: psvita
+            targetarch: armv7hf
 
           # Android systems
           - os: ubuntu-latest
@@ -167,6 +178,12 @@ jobs:
         gh release upload --clobber "$RELEASE_TAG" out/*-linux-armhf.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-linux-i386.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-linux-riscv64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-nswitch-arm64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-psvita-armv7hf.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip
     - name: Publish build status page

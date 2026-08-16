@@ -5,6 +5,9 @@ cd "$GITHUB_WORKSPACE" || exit 1
 
 export VITASDK=/usr/local/vitasdk
 
+# vdpm is a pacman frontend now, it asks for confirmation unless told otherwise
+export VDPM_NONINTERACTIVE=1
+
 # only the toolchain is needed for the SDK libraries, the engine deps
 # (vitaGL, the SDL fork, vita-rtld) stay in xash3d-fwgs CI
 git clone https://github.com/vitasdk/vdpm.git --depth=1 || exit 1

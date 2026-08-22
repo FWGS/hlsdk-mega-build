@@ -148,6 +148,29 @@
       dl_method: moddb
       dl_sha256sum: 80afd19120f2aad29924461e7df57cfb8180993accf234e0960f88af2e1585cb
       unpack_method: unzip
+    # Half-Life: Black Guard Demo
+    - title: 'Half-Life:Black Security'
+      dir: [BLS]
+      url: 'https://www.moddb.com/mods/half-lifeblack-guard'
+      dl_url: 'https://www.moddb.com/mods/half-lifeblack-guard/downloads/black-security-demo10v'
+      dl_method: moddb
+      dl_sha256sum: 4c42047ff193b1b5291d843e3314481a0de9f5b3f07b30eaff0a16ce09146911
+      unpack_method: unrar
+    # Yet Another Half-Life: Black Guard Demo
+    - title: 'Half-Life:Black Security Episode 1'
+      dir: [BS-Episode1]
+      url: 'https://www.moddb.com/mods/half-lifeblack-guard'
+      dl_url: 'https://www.moddb.com/mods/half-lifeblack-guard/downloads/bsce'
+      dl_method: moddb
+      dl_sha256sum: d14dfbae821511f2cee98876937391916b1c6c8d4111c43159b3f6aae3e39d31
+      unpack_method: unrar
+    - title: 'Half-Life: Black Guard'
+      dir: [Blackguard]
+      url: 'https://www.moddb.com/mods/half-lifeblack-guard/'
+      dl_url: 'https://www.moddb.com/mods/half-lifeblack-guard/downloads/hl1modblackguard-7z'
+      dl_method: moddb
+      dl_sha256sum: fa6c5c7c8823cbbbbe964c4f11f2263dfed78939ffe51520981ddb739f9f5eb3
+      unpack_method: 7z
 - branch: clcampaign
   games:
     - title: 'Crack-Life: Campaign Mode'
@@ -208,6 +231,13 @@
       steam:
         app_id: 40
         depot_ids: [1, 41]
+    - title: 'ThreeWave CTF'
+      dir: [3wave]
+      url: 'https://www.moddb.com/games/deathmatch-classic'
+      dl_url: 'https://www.moddb.com/games/deathmatch-classic/downloads/threewave-ctf'
+      dl_method: moddb
+      dl_sha256sum: 1afec1d5985d11e02a9b276b476fcd2a1ecd60d9bfd06bacfab013a1176ff9f2
+      unpack_method: unzip
 - branch: echoes
   games:
     - title: 'Half-Life: Echoes'
@@ -360,6 +390,14 @@
       # (per the built libraries) is rp_pub
       unpack_root: rp_v1_pub_final1
       unpack_to: rp_pub
+    # NOTE: There need to check title(*game* field) in liblist.gam using regexp
+    - title: 'Half-Life: Residual Life - Public 2.07'
+      dir: [Residual_Life_pub2.07]
+      url: 'https://www.moddb.com/mods/hl-residual-life'
+      dl_url: 'https://www.moddb.com/mods/hl-residual-life/downloads/residual-life-207'
+      dl_method: moddb
+      dl_sha256sum: 5cf7047bc658b8be4a09dff84864038830ab679cbe91fbb96840380052b9294e
+      unpack_method: unzip
 - branch: redempt
   games:
     - title: 'Absolute Redemption'
@@ -369,6 +407,13 @@
       dl_method: moddb
       dl_sha256sum: 7a686a95ab2aaf430967aab542cb39f09306dd12d35847e7abe590cc20df79b4
       unpack_method: unzip
+    - title: 'Redemption'
+      dir: [redempt]
+      url: 'https://www.moddb.com/mods/absolute-redemption'
+      dl_url: 'https://www.moddb.com/mods/absolute-redemption/downloads/redemption-mod-release'
+      dl_method: moddb
+      dl_sha256sum: 7ae0f060921ca0779f3d1730ea0b0b741ee6cb835b4233515fb7c1619c0784b9
+      unpack_method: unrar
 - branch: sci
   games:
     - title: 'Half-Life: The Quest mod'
@@ -437,6 +482,13 @@
       dl_url: 'https://www.moddb.com/mods/they-hunger/downloads/they-hunger-trilogy-crossplatform'
       dl_method: moddb
       dl_sha256sum: 65981b34d0ae15c6beb2da9bd1754458005aa714ccf6748cde2fc94068b81641
+      unpack_method: unzip
+    - title: 'They hunger rebuild'
+      dir: [TheyHunger_rebuild]
+      url: 'https://www.moddb.com/mods/they-hungerrebuild'
+      dl_url: 'https://www.moddb.com/mods/they-hungerrebuild/downloads/theyhunger-rebuild-episode-1'
+      dl_method: moddb
+      dl_sha256sum: 5ee9543ca990ec2b8558f5ebbdc78404c2bab186c8c21fb4863eeec17b8ac0c9
       unpack_method: unzip
 - branch: tot
   games:

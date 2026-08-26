@@ -148,6 +148,15 @@
       dl_method: moddb
       dl_sha256sum: 80afd19120f2aad29924461e7df57cfb8180993accf234e0960f88af2e1585cb
       unpack_method: unzip
+- branch: CLAnniversary
+  games:
+    - title: 'Crack-Life: Anniversary'
+      dir: [CLAnniversary]
+      url: 'https://www.moddb.com/mods/crack-life'
+      dl_url: 'https://www.moddb.com/mods/crack-life/downloads/crack-life-anniversary-campaign'
+      dl_method: moddb
+      dl_sha256sum: 220b4f725292e0955301942bc41db26fe7bf95dd285133ab75055dbb37147f0a
+      unpack_method: unzip
 - branch: clcampaign
   games:
     - title: 'Crack-Life: Campaign Mode'

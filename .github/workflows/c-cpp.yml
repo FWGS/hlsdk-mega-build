@@ -83,6 +83,11 @@ jobs:
           # - os: macos-15-intel # x86 as per github documentation (will they fix it before they deprecate this version?..)
           #  targetos: apple
           #  targetarch: amd64
+
+          # iOS systems, built on GitHub macOS VMs
+          - os: macos-latest # arm64 as per github documentation
+            targetos: ios
+            targetarch: arm64
     env:
       YQ_VERSION: 4.53.3
       GH_CPU_OS: ${{ matrix.targetos }}
@@ -192,6 +197,8 @@ jobs:
         gh release upload --clobber "$RELEASE_TAG" out/*-psvita-armv7hf.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-ios-arm64.zip
     - name: Evict superseded ccache generations
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

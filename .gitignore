@@ -3,3 +3,4 @@ hlsdk-portable/
 install-man-page.sh
 yq*
 __pycache__
+.DS_Store

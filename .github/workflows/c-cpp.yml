@@ -169,7 +169,6 @@ jobs:
           --repo "$GITHUB_REPOSITORY" \
           --prerelease
         gh release upload --clobber "$RELEASE_TAG" out/manifest.json
-        sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-android-arm64.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-android-armv7l.zip

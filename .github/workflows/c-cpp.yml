@@ -50,9 +50,6 @@ jobs:
           # Android systems
           - os: ubuntu-latest
             targetos: android
-            targetarch: amd64
-          - os: ubuntu-latest
-            targetos: android
             targetarch: i386
           - os: ubuntu-latest
             targetos: android

@@ -148,6 +148,29 @@
       dl_method: moddb
       dl_sha256sum: 80afd19120f2aad29924461e7df57cfb8180993accf234e0960f88af2e1585cb
       unpack_method: unzip
+    # Half-Life: Black Guard Demo
+    - title: 'Half-Life:Black Security'
+      dir: [BLS]
+      url: 'https://www.moddb.com/mods/half-lifeblack-guard'
+      dl_url: 'https://www.moddb.com/mods/half-lifeblack-guard/downloads/black-security-demo10v'
+      dl_method: moddb
+      dl_sha256sum: 4c42047ff193b1b5291d843e3314481a0de9f5b3f07b30eaff0a16ce09146911
+      unpack_method: unrar
+    # Yet Another Half-Life: Black Guard Demo
+    - title: 'Half-Life:Black Security Episode 1'
+      dir: [BS-Episode1]
+      url: 'https://www.moddb.com/mods/half-lifeblack-guard'
+      dl_url: 'https://www.moddb.com/mods/half-lifeblack-guard/downloads/bsce'
+      dl_method: moddb
+      dl_sha256sum: d14dfbae821511f2cee98876937391916b1c6c8d4111c43159b3f6aae3e39d31
+      unpack_method: unrar
+    - title: 'Half-Life: Black Guard'
+      dir: [Blackguard]
+      url: 'https://www.moddb.com/mods/half-lifeblack-guard/'
+      dl_url: 'https://www.moddb.com/mods/half-lifeblack-guard/downloads/hl1modblackguard-7z'
+      dl_method: moddb
+      dl_sha256sum: fa6c5c7c8823cbbbbe964c4f11f2263dfed78939ffe51520981ddb739f9f5eb3
+      unpack_method: 7z
 - branch: CLAnniversary
   games:
     - title: 'Crack-Life: Anniversary'
@@ -217,6 +240,13 @@
       steam:
         app_id: 40
         depot_ids: [1, 41]
+    - title: 'ThreeWave CTF'
+      dir: [3wave]
+      url: 'https://www.moddb.com/games/deathmatch-classic'
+      dl_url: 'https://www.moddb.com/games/deathmatch-classic/downloads/threewave-ctf'
+      dl_method: moddb
+      dl_sha256sum: 1afec1d5985d11e02a9b276b476fcd2a1ecd60d9bfd06bacfab013a1176ff9f2
+      unpack_method: unzip
 - branch: echoes
   games:
     - title: 'Half-Life: Echoes'
@@ -369,6 +399,16 @@
       # (per the built libraries) is rp_pub
       unpack_root: rp_v1_pub_final1
       unpack_to: rp_pub
+    # NOTE: There need to check title(*game* field) in liblist.gam using regexp
+    - title: 'Half-Life: Residual Life'
+      dir: [Residual_Life_pub]
+      url: 'https://www.moddb.com/mods/hl-residual-life'
+      dl_url: 'https://www.moddb.com/mods/hl-residual-life/downloads/residual-life-207'
+      dl_method: moddb
+      dl_sha256sum: 5cf7047bc658b8be4a09dff84864038830ab679cbe91fbb96840380052b9294e
+      unpack_method: unzip
+      unpack_root: Residual_Life_pub2.07
+      unpack_to: Residual_Life_pub
 - branch: redempt
   games:
     - title: 'Absolute Redemption'
@@ -404,7 +444,181 @@
       dl_method: moddb
       dl_sha256sum: 5a393894e8b901bd6b28fbbe892a335af117dfbe7c629d871fc0368b10da3693
       unpack_method: unzip
-
+    - title: 'Accidental Assassin'
+      dir: [Accidental]
+      url: 'https://www.moddb.com/mods/accidental-assassin'
+      dl_url: 'https://www.moddb.com/mods/accidental-assassin/downloads/accidental-assassin'
+      dl_method: moddb
+      dl_sha256sum: 4c06e074d237f7256590a49aa35f6d35666bc508c6e53784ab32c98da7df4ca7
+      unpack_method: unzip
+    - title: 'Big Scientists'
+      dir: [BigSci]
+      url: 'https://www.moddb.com/mods/big-scientists'
+      dl_url: 'https://www.moddb.com/mods/big-scientists/downloads/big-scientists'
+      dl_method: moddb
+      dl_sha256sum: 496d40abe91e719ee7a8448fa62106d3190e20f11896c0956b70eed7a7648322
+      unpack_method: unzip
+    - title: 'Black Silla Assault DEMO Version'
+      dir: [BSA-DEMO]
+      url: 'https://www.moddb.com/mods/black-silla-assault'
+      # NOTE: WON Version has logo.avi
+      dl_url: 'https://www.moddb.com/mods/black-silla-assault/downloads/black-silla-assault-demo-won-version'
+      dl_method: moddb
+      dl_sha256sum: 23770c664d08be538e0c7ef3f70d656a08d5aee8cffcc7a755c4f5cd1bd74388
+      unpack_method: unrar
+    - title: 'Blbej Den'
+      dir: [B.D]
+      url: 'https://www.moddb.com/mods/blbej-den'
+      dl_url: 'https://www.moddb.com/mods/blbej-den/downloads/blbej-den-ziped-and-for-linux'
+      dl_method: moddb
+      dl_sha256sum: ff1b9817d1fb1f120faaefdba735b2ecc12b3b5685db575906f472a7ee5bd4ea
+      unpack_method: unzip
+    - title: 'COLD EXPERIMENT'
+      dir: [coldexv1]
+      # NOTE: There need to move liblist.gam into folder with resources
+      url: 'https://www.moddb.com/games/half-life/addons/cold-experiment'
+      dl_url: 'https://www.moddb.com/games/half-life/addons/cold-experiment'
+      dl_method: moddb
+      dl_sha256sum: 3a3698478d638e3a22e9b1211571b4a8e8a1fc7280b19358b1b89819e6de72cd
+      unpack_method: unzip
+    #- title: 'Dead Sector'
+    #  dir: [ds]
+    #  # NOTE: Archive contains installer
+    #  url: 'https://www.moddb.com/mods/dead-sector'
+    #  dl_url: 'https://www.moddb.com/mods/dead-sector/downloads/dead-sector-10a'
+    #  dl_method: moddb
+    #  dl_sha256sum: 4df849d2639e92aff16ef109455819c3810c3ecfaf28d7610aff2ce3f7bc0624
+    #  unpack_method: unrar
+    #- title: 'Death Is Dead'
+    #  dir: [did]
+      # NOTE: Archive contains installer
+    #  url: 'https://www.moddb.com/games/half-life/addons/death-is-dead'
+    #  dl_url: 'https://www.moddb.com/games/half-life/addons/death-is-dead'
+    #  dl_method: moddb
+    #  dl_sha256sum: 7b2954ae3bc5418e30a9bf02424f3e1f64699b64673b7b7c4977f724ffc1ff18
+    #  unpack_method: unzip
+    - title: 'EFBM beta demo'
+      dir: [EFBMbetademo]
+      url: 'https://www.moddb.com/mods/escape-from-black-mesa'
+      dl_url: 'https://www.moddb.com/mods/escape-from-black-mesa/downloads/efbmbetademo'
+      dl_method: moddb
+      dl_sha256sum: 0266c626bd13c41782a325aea574cd56509ae3859127fe0007c6e97c1fa159f5
+      unpack_method: unzip
+    - title: 'Escape from Black Mesa'
+      dir: [efbm_alpha]
+      url: 'https://www.moddb.com/mods/escape-from-black-mesa'
+      dl_url: 'https://www.moddb.com/mods/escape-from-black-mesa/downloads/escape-from-black-mesa-alpha'
+      dl_method: moddb
+      dl_sha256sum: a0add3627e24622721d3e8f9ef16b76e393f986322cf11f6b8684ad759dd4601
+      unpack_method: unzip
+      unpack_root: Spirit
+      unpack_to: efbm_alpha
+    - title: 'Escape Trainingroom'
+      dir: [ETraining]
+      url: 'https://www.moddb.com/mods/half-life-escape'
+      dl_url: 'https://www.moddb.com/mods/half-life-escape/downloads/escape-training-room'
+      dl_method: moddb
+      dl_sha256sum: b479ef5ed0388f76e9bd1dca12f9d1a4392352db85b85ef7d26d8c008a87b311
+      unpack_method: unrar
+    #- title: 'City Crush Map'
+    #  dir: [cc]
+    #  url: 'https://gamer-lab.com/rus/mods_goldsrc/City_Crush'
+    #  dl_url: 'https://gamer-lab.com/rus/mods_goldsrc/City_Crush'
+    #  dl_method: gamer-lab
+    #  dl_sha256sum: 0b1708ab1734663b36b4e86fe858d6c7df4342428f83dbde3e54f3e136e8fd22
+    #  unpack_method: unrar
+    - title: 'Invasion 105'
+      dir: [Invasion105]
+      url: 'https://www.moddb.com/mods/half-life-invasion-105'
+      dl_url: 'https://www.moddb.com/mods/half-life-invasion-105/downloads/invasion-105'
+      dl_method: moddb
+      dl_sha256sum: ad55cde78ac59b8e184b4df03880ce412c505d4366824ae491df7d467c521d86
+      unpack_method: unrar
+    - title: 'ISSUES'
+      dir: [issues]
+      url: 'https://www.moddb.com/mods/issues'
+      dl_url: 'https://www.moddb.com/mods/issues/downloads/issues-final-release'
+      dl_method: moddb
+      dl_sha256sum: b091535a0a5484e9568411a7c374ff077a85334cbfcab64821e03944a6d6c97f
+      unpack_method: unzip
+    - title: 'Mission impracticable 2'
+      dir: [Mi2]
+      url: 'https://www.moddb.com/mods/mission-impracticable-2'
+      dl_url: 'https://www.moddb.com/mods/mission-impracticable-2/downloads/mission-impracticable-2'
+      dl_method: moddb
+      dl_sha256sum: cd15a2b80fbbee7726b0b870c0ae9fe305aa4b83cd675cb85364fa75b34b3645
+      unpack_method: unzip
+    - title: 'Prison'
+      dir: [prison]
+      url: 'https://www.moddb.com/mods/half-life-prison'
+      dl_url: 'https://www.moddb.com/mods/half-life-prison/downloads/half-life-prison-v21'
+      dl_method: moddb
+      dl_sha256sum: c8e15cb7ac2ff1338a8f93b2f9c01dd52e1cfaaa3b98cef73a88751848c02284
+      unpack_method: unrar
+    - title: 'Prize'
+      dir: [prize]
+      url: 'https://www.moddb.com/mods/prize'
+      dl_url: 'https://www.moddb.com/mods/prize/downloads/prize-11'
+      dl_method: moddb
+      dl_sha256sum: b742a58ea9e2bda1c67711f719567322a8e91af6eb0075840667678070818910
+      unpack_method: unzip
+    - title: 'Radiation Alert: Episode 1'
+      dir: [radalert]
+      url: 'https://www.moddb.com/mods/radiation-alert-episode-1'
+      dl_url: 'https://www.moddb.com/mods/radiation-alert-episode-1/downloads/radiation-alert-episode-1'
+      dl_method: moddb
+      dl_sha256sum: 00049df384c6d5985ad498aeee08faf1778121181b10d115927a1a041de46fa1
+      unpack_method: 7z
+    - title: 'Half-Life: Run From Hell'
+      dir: [rhf]
+      url: 'https://www.moddb.com/addons/run-from-hell'
+      dl_url: 'https://www.moddb.com/addons/run-from-hell'
+      dl_method: moddb
+      dl_sha256sum: 9c46996e0e4dd2d9ffb24769cfb71591008185278eff183b8a70f48e458be95f
+      unpack_method: unrar
+    #- title: "Santa's Revenge"
+    #  dir: [SantasRevenge]
+      # NOTE: Archive contains installer
+    #  url: 'https://www.moddb.com/games/half-life/addons/santas-revenge'
+    #  dl_url: 'https://www.moddb.com/games/half-life/addons/santas-revenge'
+    #  dl_method: moddb
+    #  dl_sha256sum: 550423b7353a40193265a095c434a46e11467b75305f5c8ea8c656271e8a2a2e
+    #  unpack_method: unzip
+    - title: 'Sector 6'
+      dir: [Sector6]
+      url: 'https://www.moddb.com/mods/sector-6'
+      dl_url: 'https://www.moddb.com/mods/sector-6/downloads/sector-6'
+      dl_method: moddb
+      dl_sha256sum: 37a1c5ac0d1856eec8cdc3e57b2378e7bf0d9896c3125ba30cfb26f0d9de63f0
+      unpack_method: 7z
+    - title: 'Space Prisoner'
+      dir: [prison]
+      url: 'https://www.moddb.com/games/half-life/addons/space-prisoner-v11'
+      dl_url: 'https://www.moddb.com/games/half-life/addons/space-prisoner-v11'
+      dl_method: moddb
+      dl_sha256sum: e7c7f66dbb25a171c18e404094575250babdb454f0688a0458859d8cfe697b2f
+      unpack_method: rar
+    - title: 'Terrorist attack'
+      dir: [Terroristattack2]
+      url: 'https://www.moddb.com/games/half-life/addons/terrorist-attack-2'
+      dl_url: 'https://www.moddb.com/games/half-life/addons/terrorist-attack-2'
+      dl_method: moddb
+      dl_sha256sum: 696b16fc5a2fd3a18e5cc41ebb53eefd246e512824f8531849edd23f92460ad9
+      unpack_method: zip
+    - title: 'Timeline III: The Heart of Darkness'
+      dir: [darkness]
+      url: 'https://www.moddb.com/mods/timeline-series'
+      dl_url: 'https://www.moddb.com/mods/timeline-series/downloads/timeline-part-iii'
+      dl_method: moddb
+      dl_sha256sum: da540a99730125a83db56ff33868e00ce1645141c2ce3baf4820017607eb5906
+      unpack_method: zip
+    - title: 'Underground2 Demo'
+      dir: [underground2]
+      url: 'https://www.moddb.com/games/half-life/addons/underground-2-demo'
+      dl_url: 'https://www.moddb.com/games/half-life/addons/underground-2-demo'
+      dl_method: moddb
+      dl_sha256sum: 7a2a24aef35b9f313b6211717cb51117005f9662cced333dc669709f70093b3e
+      unpack_method: zip
 # Xen Warrior
 - branch: sohl1.2
   dl_name: xenwar
@@ -446,6 +660,13 @@
       dl_url: 'https://www.moddb.com/mods/they-hunger/downloads/they-hunger-trilogy-crossplatform'
       dl_method: moddb
       dl_sha256sum: 65981b34d0ae15c6beb2da9bd1754458005aa714ccf6748cde2fc94068b81641
+      unpack_method: unzip
+    - title: 'They hunger rebuild'
+      dir: [TheyHunger_rebuild]
+      url: 'https://www.moddb.com/mods/they-hungerrebuild'
+      dl_url: 'https://www.moddb.com/mods/they-hungerrebuild/downloads/theyhunger-rebuild-episode-1'
+      dl_method: moddb
+      dl_sha256sum: 5ee9543ca990ec2b8558f5ebbdc78404c2bab186c8c21fb4863eeec17b8ac0c9
       unpack_method: unzip
 - branch: tot
   games:

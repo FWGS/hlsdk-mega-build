@@ -19,7 +19,7 @@ PAGE = Path('page')
 PLATFORM_ORDER = [
 	'linux-amd64', 'linux-i386', 'linux-arm64', 'linux-armhf', 'linux-riscv64',
 	'android-i386', 'android-arm64', 'android-armv7l',
-	'nswitch-arm64', 'psvita-armv7hf',
+	'nswitch-arm64', 'psvita-armv7hf', 'ps4-amd64',
 	'win32-amd64', 'apple-arm64',
 ]
 

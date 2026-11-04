@@ -46,6 +46,9 @@ jobs:
           - os: ubuntu-latest
             targetos: psvita
             targetarch: armv7hf
+          - os: ubuntu-latest
+            targetos: ps4
+            targetarch: amd64
 
           # Android systems
           - os: ubuntu-latest
@@ -190,6 +193,8 @@ jobs:
         gh release upload --clobber "$RELEASE_TAG" out/*-nswitch-arm64.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-psvita-armv7hf.zip
+        sleep 5s
+        gh release upload --clobber "$RELEASE_TAG" out/*-ps4-amd64.zip
         sleep 5s
         gh release upload --clobber "$RELEASE_TAG" out/*-win32-amd64.zip
         sleep 5s
